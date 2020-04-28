@@ -140,7 +140,7 @@
                   
                   <span class="post-meta mr-2">
                     <i class="iconfont icon-chart"></i>
-                    690 字
+                    1.7k 字
                   </span>
                 
 
@@ -150,7 +150,7 @@
                       <i class="iconfont icon-clock-fill"></i>
                     
                     
-                    7
+                    18
                      分钟
                   </span>
                 
@@ -199,6 +199,7 @@
 <h3 id="3-MySQL索引的结构"><a href="#3-MySQL索引的结构" class="headerlink" title="3.MySQL索引的结构"></a>3.MySQL索引的结构</h3><p>索引是在存储引擎层实现的，所以不同的存储引擎会有不同的索引类型的实现。这里主要我主要说下大多数MySQL存储引擎的默认索引类型B+ Tree。</p>
 <p><strong>B- Tree</strong></p>
 <p>提到了B+ Tree就不得不说一下B- Tree。B- Tree是一种多路查找树，结构如下：</p>
+<p>(以下图中如没有特殊标记，都是尚硅谷MySQL高级教程中的，建议大家去看一下。讲解的真的很清楚！)</p>
 <p><img src="/img/MySQL/BTree%E5%8E%9F%E7%90%86%E5%9B%BE.png" srcset="/img/loading.gif" alt="BTree原理图"></p>
 <p>一颗B树，浅蓝色的块我们称之为<strong>磁盘块</strong>，每个磁盘块中有<strong>数据项</strong>(深蓝色)和指向下一个节点的<strong>指针</strong>(黄色)。</p>
 <p><strong>真实的数据存储于叶子节点中</strong>，非叶子节点只存储指引搜索方向的数据项。</p>
@@ -206,9 +207,110 @@
 <p>如60，首先把磁盘块1加载到内存中，发生<strong>第一次IO</strong>。在内存中二分查找确定60 &gt; 35，锁定磁盘块1的p3指针。通过磁盘块1的p3指针的磁盘块地址把磁盘块4加载到内存，发生<strong>第二次IO</strong>。然后同理找到磁盘块9，将磁盘块9加载到内存中，发生<strong>第三次IO</strong>。总共发生3次IO。</p>
 <p>假设上面3层的B- Tree存储上百万条数据，合理使用索引只需要3次IO，但如果没有索引可能会发生上百万次的IO！</p>
 <p><strong>B+ Tree</strong></p>
-<p>如图：(以下图如没有特殊标记，都是尚硅谷MySQL高级教程中的，建议大家去看一下。讲解的真的很清楚！)</p>
 <p><img src="/img/MySQL/B+Tree%E5%8E%9F%E7%90%86%E5%9B%BE.png" srcset="/img/loading.gif" alt="B+Tree原理图"></p>
-<p>敬请期待……</p>
+<p>B+ Tree基于B- Tree，可以看到与B- Tree不同的地方在于叶子节点都是关联起来的。</p>
+<p><strong>B+ Tree和B- Tree的区别</strong></p>
+<ol>
+<li>B- Tree关键字和实际的数据是放在一起的。而B+ Tree中，非叶子节点只存储关键字和下一条数据的指针，实际的数据只在叶子节点中存放。</li>
+<li>B- Tree中越靠近根节点的数据查找速度越快。而B+ Tree中无论查找哪一个节点，查找速度基本都是相同的。这么看B- Tree似乎优于B+ Tree，但是实际情况恰恰相反。由于B+ Tree非叶子节点不需要存放实际的数据，所以每个非叶子节点所能容纳的元素个数更多，因此树的高度要小于B- Tree。磁盘的IO次数就会更少！同时由于B+ Tree中叶子节点都是关联起来的，更方便进行顺序访问！</li>
+</ol>
+<p><strong>总结</strong></p>
+<p>数据库选择B+  Tree作为索引的两点原因：</p>
+<ol>
+<li><p>B+ Tree的磁盘读写代价更低</p>
+<p><em>因为B+ Tree非叶子节点没有存放真实的数据，所以相同大小的盘块所能容放的关键字就越多，相对来说IO读写次数就越少</em></p>
+</li>
+<li><p>B+ Tree的查询效率更加稳定</p>
+<p><em>B+ Tree叶子节点才存放真实的数据，所以每次查找必须落在叶子节点上。</em></p>
+</li>
+</ol>
+<p><strong>聚簇索引与非聚簇索引</strong></p>
+<ul>
+<li><p><strong>聚簇索引</strong></p>
+<p>索引和实际数据存放在一起，找到了索引也就直接找到了对应的数据。</p>
+</li>
+<li><p><strong>非聚簇索引</strong></p>
+<p>索引和指向实际数据的指针存放在一起，找到了索引后，根据指针再次寻找实际数据。</p>
+</li>
+</ul>
+<p><em>在InnoDB中，默认主键是聚簇索引，其他的索引称之为辅助索引。辅助索引中存放的是索引和主键，使用辅助索引时，先找到对应的索引然后拿到主键，在进行二次查找。</em></p>
+<!--其实上面提到的B- Tree、B+ Tree、聚簇索引、非聚簇索引等，每一个知识点都值得拿出来单写一篇文章。但是这里我主要想学习MySQL中索引的使用以及索引如何优化，更偏向实际操作。以后我会单独写以上提到的理论知识。还请大家多多包涵！-->
+
+<h3 id="4-索引的分类"><a href="#4-索引的分类" class="headerlink" title="4.索引的分类"></a>4.索引的分类</h3><p>终于到我想说的重点了！</p>
+<p>首先，使用MySQL索引的索引时主要分为四类，<strong>单值索引</strong>、<strong>唯一索引</strong>、<strong>主键索引</strong>、<strong>复合索引</strong>。</p>
+<ul>
+<li><p>单值索引</p>
+<p>定义：即一个索引只包含单列，一个表可以有多个单值索引。</p>
+<p>语法：</p>
+<ul>
+<li><p>创建单值索引</p>
+<p><strong>CREATE</strong> <strong>INDEX</strong> idx_idxname <strong>ON</strong> table(table_column)</p>
+</li>
+<li><p>删除索引</p>
+<p><strong>DROP</strong> <strong>INDEX</strong> idx_idxname <strong>ON</strong> table</p>
+</li>
+</ul>
+</li>
+<li><p>唯一索引</p>
+<p>定义：索引列的值必须唯一，但允许有null</p>
+<p>语法：</p>
+<ul>
+<li><p>创建唯一索引</p>
+<p><strong>CREATE</strong> <strong>UNIQUE</strong> <strong>INDEX</strong>  idx_idxname <strong>ON</strong> table(table_column)</p>
+</li>
+<li><p>删除索引</p>
+<p><strong>DROP</strong> <strong>INDEX</strong> idx_idxname <strong>ON</strong> table</p>
+</li>
+</ul>
+</li>
+<li><p>主键索引</p>
+<p>定义：设定主键后，数据库会自动创建索引。InnoDB中默认主键索引为聚簇索引。</p>
+<p>语法：</p>
+<ul>
+<li><p>创建主键索引</p>
+<p><strong>ALTER</strong> <strong>TABLE</strong> table <strong>ADD</strong> <strong>PRIMARY</strong> <strong>KEY</strong> table(table_column)</p>
+</li>
+<li><p>删除主键索引</p>
+<p><strong>ALTER</strong> <strong>TABLE</strong> table <strong>DROP</strong> <strong>PRIMARY</strong> <strong>KEY</strong></p>
+</li>
+<li><p>修改主键索引</p>
+<p>需要先删除原先的主键索引，在创建新的主键索引</p>
+</li>
+</ul>
+</li>
+<li><p>复合索引</p>
+<p>定义：一个索引包含多个列</p>
+<p>语法：</p>
+<ul>
+<li><p>创建复合索引</p>
+<p><strong>CREATE</strong> <strong>INDEX</strong> idx_idxname1_idxname2 <strong>ON</strong> table(table_column1,table_column2)</p>
+</li>
+<li><p>删除复合索引</p>
+<p><strong>DROP</strong> <strong>INDEX</strong> idx_idxname1_idxname2 <strong>ON</strong> table</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><em>查看索引：<strong>SHOW</strong> <strong>INDEX</strong> <strong>FROM</strong> table</em></p>
+<h3 id="5-创建索引的时机"><a href="#5-创建索引的时机" class="headerlink" title="5.创建索引的时机"></a>5.创建索引的时机</h3><ol>
+<li>哪些情况需要创建索引<ul>
+<li>主键自动建立唯一索引</li>
+<li>频繁作为查询条件的字段应该创建索引</li>
+<li>查询中与其他表关联的字段应该创建索引</li>
+<li>遇到单值索引和复合索引的选择时，优先复合索引</li>
+<li>查询中排序(order by)的字段，应该创建索引</li>
+<li>查询中分组(group by)的字段，应该创建索引</li>
+</ul>
+</li>
+<li>哪些情况不需要创建索引<ul>
+<li>表记录太少</li>
+<li>经常增删改的表或字段</li>
+<li>where条件中用不到的字段</li>
+<li>过滤性不好的字段 <strong><em>这里我在学习的时候没有想通，如果有大佬理解，还请教教我！感谢！</em></strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="6-索引优化"><a href="#6-索引优化" class="headerlink" title="6.索引优化"></a>6.索引优化</h3><p>敬请期待……</p>
 
             </article>
             <hr>
@@ -232,7 +334,7 @@
                 
               </div>
               
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                <p class="note note-warning">本博客所有文章除特别声明外，转载请注明出处！</p>
               
               
                 <div class="post-prevnext row">
