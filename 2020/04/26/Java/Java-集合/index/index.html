@@ -140,7 +140,7 @@
                   
                   <span class="post-meta mr-2">
                     <i class="iconfont icon-chart"></i>
-                    35 字
+                    3.2k 字
                   </span>
                 
 
@@ -150,7 +150,7 @@
                       <i class="iconfont icon-clock-fill"></i>
                     
                     
-                    1
+                    40
                      分钟
                   </span>
                 
@@ -179,8 +179,345 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h2 id="Java-集合"><a href="#Java-集合" class="headerlink" title="Java-集合"></a>Java-集合</h2><h3 id="1-ArrayList详解"><a href="#1-ArrayList详解" class="headerlink" title="1.ArrayList详解"></a>1.ArrayList详解</h3><p>敬请期待……</p>
-<h3 id="2-LinkedList详解"><a href="#2-LinkedList详解" class="headerlink" title="2.LinkedList详解"></a>2.LinkedList详解</h3><p>敬请期待……</p>
+              <h2 id="Java-集合"><a href="#Java-集合" class="headerlink" title="Java-集合"></a>Java-集合</h2><p><em>以下的内容都是我个人学习时遇到的知识点，再加上我个人的理解。如有不对的地方还请多多包涵，下面是我的联系方式，有其他理解或者不对的地方都可以加我！共同讨论，共同进步！</em></p>
+<p>QQ: 1365841924</p>
+<p><strong><em>斜体</em></strong>是我的个人理解</p>
+<h3 id="1-ArrayList详解"><a href="#1-ArrayList详解" class="headerlink" title="1.ArrayList详解"></a>1.ArrayList详解</h3><h4 id="首先从他的成员属性入手。上图！"><a href="#首先从他的成员属性入手。上图！" class="headerlink" title="首先从他的成员属性入手。上图！"></a>首先从他的成员属性入手。上图！</h4><p><img src="/img/Java/ArrayList%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7_1.png" srcset="/img/loading.gif" alt="ArrayList成员属性_1"></p>
+<p><img src="/img/Java/ArrayList%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7_2.png" srcset="/img/loading.gif" alt="ArrayList成员属性_2"></p>
+<p><img src="/img/Java/ArrayList%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7_3.png" srcset="/img/loading.gif" alt="ArrayList成员属性_3"></p>
+<p>从上面的内容我们可以知道：</p>
+<ol>
+<li>ArrayList是基于Object数组构建的。</li>
+<li>如果未指定容量大小，则默认容量是10。</li>
+<li>ArrayList的最大容量为Integer.MAX_VALUE - 8，如果超出这个大小会出现OOM(内存溢出)异常。</li>
+</ol>
+<h4 id="接下来我们先看ArrayList的构造方法！"><a href="#接下来我们先看ArrayList的构造方法！" class="headerlink" title="接下来我们先看ArrayList的构造方法！"></a>接下来我们先看ArrayList的构造方法！</h4><p><strong>1.无参构造方法</strong></p>
+<p><img src="/img/Java/ArrayList%E6%97%A0%E5%8F%82%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95.png" srcset="/img/loading.gif" alt="ArrayList无参构造方法"></p>
+<p><em>注意！这里所说的区分EMPTY_ELEMENTDATA和DEFAULT_EMPTY_ELEMENTDATA主要是指：如果使用指定初始容量的构造函数的话，传入的值为0则应该初始化一个长度为0的空数组。这时就要使用EMPTY_ELEMENTDATA。如果使用无参构造方法，虽然赋值的也是一个空数组，但是！在第一次添加元素的时候会判断下当前数组是否是DEFAULT_EMPTY_ELEMENTDATA数组，如果是那么先初始化成容量大小为10的数组。</em></p>
+<p><em>看明白了吗？</em></p>
+<p><em>总结下就是，如果指定初始数组容量为0，那么使用的是EMPTY_ELEMENTDATA。但是未指定的话，使用DAFAULT_EMPTY_ELEMENTDATA但是默认的初始化大小是10而非0。</em></p>
+<p><strong>2.带参构造方法</strong></p>
+<p><img src="/img/Java/ArrayList%E5%B8%A6%E5%8F%82%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95_1.png" srcset="/img/loading.gif" alt="ArrayList带参构造方法_1"></p>
+<p>这里ArrayList还提供了一个构造方法</p>
+<p><em>我的理解是如果这个参数实现了Collection接口，并且长度不为0就将这个参数中的数据传递给elementdata</em></p>
+<p><img src="/img/Java/ArrayList%E5%B8%A6%E5%8F%82%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95_2.png" srcset="/img/loading.gif" alt="ArrayList带参构造方法_2"></p>
+<h4 id="继续！我们来分析下ArrayList的add方法！"><a href="#继续！我们来分析下ArrayList的add方法！" class="headerlink" title="继续！我们来分析下ArrayList的add方法！"></a>继续！我们来分析下ArrayList的add方法！</h4><p>add方法给了两个</p>
+<p><img src="/img/Java/ArrayListadd%E6%96%B9%E6%B3%95_1.png" srcset="/img/loading.gif" alt="ArrayListadd方法_1"></p>
+<p><img src="/img/Java/ArrayListadd%E6%96%B9%E6%B3%95_2.png" srcset="/img/loading.gif" alt="ArrayListadd方法_2"></p>
+<p>前者是添加到ArrayList的末尾，后者是添加到指定位置。</p>
+<p>我们先来看前者<code>add(E e)</code>：</p>
+<pre><code class="hljs Java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>&#123;
+    <span class="hljs-comment">//1. 先进行容量确认，查看size + 1后是否需要扩容</span>
+    ensureCapacityInternal(size + <span class="hljs-number">1</span>);  <span class="hljs-comment">// Increments modCount!!</span>
+    <span class="hljs-comment">//2. 将元素添加到数组</span>
+    elementData[size++] = e;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+&#125;</code></pre>
+
+<p>这里调用了一个方法<code>ensureCapacityInternal()</code>，我们继续跟进：</p>
+<pre><code class="hljs Java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ensureCapacityInternal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;
+	ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));
+&#125;</code></pre>
+
+<p>这里又调用了<code>ensureExplicitCapacity()</code>，在方法参数中调用了<code>calculateCapacity()</code>。我们先进入<code>calculateCapacity()</code>中看一下。</p>
+<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">calculateCapacity</span><span class="hljs-params">(Object[] elementData, <span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;
+    <span class="hljs-comment">//1. 在这里先确认elementdata是否指向的是DEFAULTCAPACITY_EMPTY_ELEMENTDATA这个空数组</span>
+    <span class="hljs-comment">//	 如果是，比较下minCapacity(其实就是size + 1后的大小)和DEFAULT_CAPACITY(10)谁大返回谁</span>
+    <span class="hljs-keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;
+    	<span class="hljs-keyword">return</span> Math.max(DEFAULT_CAPACITY, minCapacity);
+    &#125;
+    <span class="hljs-comment">//	 如果不等于DEFAULTCAPACITY_EMPTY_ELEMENTDATA直接返回minCapacity</span>
+    <span class="hljs-keyword">return</span> minCapacity;
+&#125;</code></pre>
+
+<p>在这里我们可以看到之前提到的，如果使用默认构造方法，虽然先赋值了一个空数组，但是在这里会扩容成大小为10的数组。</p>
+<p><code>calculateCapacity()</code>说完了，就该进入到<code>ensureExplicitCapacity()</code>了。</p>
+<pre><code class="hljs Java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ensureExplicitCapacity</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;
+    <span class="hljs-comment">// 这个modCount不用管，我进入看了以下，认为就是记录ArrayList集合操作的次数</span>
+    modCount++;
+
+    <span class="hljs-comment">// 这里如果minCapacity(size + 1)大于elementdata数组的长度那么就进行扩容</span>
+    <span class="hljs-keyword">if</span> (minCapacity - elementData.length &gt; <span class="hljs-number">0</span>)
+    	grow(minCapacity);
+&#125;</code></pre>
+
+<p>哎，又来一个<code>grow()</code>，其实如果当前的minCapacity(size + 1)没有超出数组的范围，这里就可以直接返回了。但是超出了就需要继续进入到<code>grow()</code>中。</p>
+<pre><code class="hljs Java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">grow</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;
+    <span class="hljs-comment">// 将数组的长度赋值给oldCapacity</span>
+    <span class="hljs-keyword">int</span> oldCapacity = elementData.length;
+    <span class="hljs-comment">// newCapacity = 1.5倍的oldCapacity，这里用到 &gt;&gt; 移位运算符。(想到了大二被数电支配的恐惧...)相当于除2，也就是 oldCapacity &gt;&gt; 1 == oldCapacity / 2</span>
+    <span class="hljs-keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="hljs-number">1</span>);
+    <span class="hljs-comment">// 如果扩容后的数组长度仍然小于minCapacity(size + 1)，那就直接把minCapacity(size + 1)赋值给newCapacity，保证扩容后数组长度 &gt;= minCapacity(size + 1)</span>
+    <span class="hljs-keyword">if</span> (newCapacity - minCapacity &lt; <span class="hljs-number">0</span>)
+    	newCapacity = minCapacity;
+    <span class="hljs-comment">// 这里检查扩容后的数组大小是否大于ArrayList允许的最大值。如果超出了MAX_ARRAY_SIZE，那就要检查是否溢出。这里我在下面直接贴出hugeCapacity()了，简单看看。</span>
+    <span class="hljs-keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="hljs-number">0</span>)
+    	newCapacity = hugeCapacity(minCapacity);
+    <span class="hljs-comment">// 将原先的数组复制到扩容后的新数组，再将引用传给elementdata。</span>
+    elementData = Arrays.copyOf(elementData, newCapacity);
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">hugeCapacity</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;
+    <span class="hljs-keyword">if</span> (minCapacity &lt; <span class="hljs-number">0</span>) <span class="hljs-comment">// overflow</span>
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> OutOfMemoryError();
+    <span class="hljs-keyword">return</span> (minCapacity &gt; MAX_ARRAY_SIZE) ?
+        Integer.MAX_VALUE :
+    MAX_ARRAY_SIZE;
+&#125;</code></pre>
+
+<p>到这里<code>add()</code>就算彻底完成了……有一点点绕。我给大家画个图感受下。</p>
+<p><img src="/img/Java/add%E6%96%B9%E6%B3%95%E6%B5%81%E7%A8%8B%E5%9B%BE.png" srcset="/img/loading.gif" alt="add方法流程图"></p>
+<p>再来看看后者<code>add(int index,E element)</code>：</p>
+<p>其实这里就相当于多了一步。判断下角标是否越界。</p>
+<pre><code class="hljs Java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, E element)</span> </span>&#123;
+    <span class="hljs-comment">// 这里判断角标是否越界，我贴过来了，看下面</span>
+    rangeCheckForAdd(index);
+	<span class="hljs-comment">// 这里还是先确定容量，看看是否扩容，</span>
+    ensureCapacityInternal(size + <span class="hljs-number">1</span>);  <span class="hljs-comment">// Increments modCount!!</span>
+    <span class="hljs-comment">// 这里也是不一样的地方，不过也很容易看懂，就是将index后面的元素整体后移一位。</span>
+    System.arraycopy(elementData, index, elementData, index + <span class="hljs-number">1</span>,
+    					size - index);
+    elementData[index] = element;
+    size++;
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">rangeCheckForAdd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>&#123;
+    <span class="hljs-keyword">if</span> (index &gt; size || index &lt; <span class="hljs-number">0</span>)
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IndexOutOfBoundsException(outOfBoundsMsg(index));
+&#125;</code></pre>
+
+<p>很多都和<code>add(E e)</code>是一样的，就不多说了</p>
+<p>我认为其实ArrayList最核心的部分就是这个扩容了~这里还是简单的看下<code>get()</code>，<code>remove()</code>，<code>set()</code>方法吧。</p>
+<p><code>get()</code></p>
+<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>&#123;
+    <span class="hljs-comment">// 检查下标是否越界，上面贴出了</span>
+    rangeCheck(index);
+    <span class="hljs-comment">// 如果未越界，返回对应位置元素的值，下面贴出elementData()</span>
+    <span class="hljs-keyword">return</span> elementData(index);
+&#125;
+
+<span class="hljs-function">E <span class="hljs-title">elementData</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>&#123;
+    <span class="hljs-keyword">return</span> (E) elementData[index];
+&#125;</code></pre>
+
+<p><code>remove()</code></p>
+<pre><code class="hljs Java"><span class="hljs-comment">// remove()有两个，一个是移除指定位置的元素，一个是移除指定元素。</span>
+<span class="hljs-comment">//1. 移除指定位置元素，这个没什么后说的，先确定下标是否越界。没越界则移除指定位置元素。并将index后面的元素向前移动一个位置</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>&#123;
+    rangeCheck(index);
+
+    modCount++;
+    E oldValue = elementData(index);
+
+    <span class="hljs-keyword">int</span> numMoved = size - index - <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">if</span> (numMoved &gt; <span class="hljs-number">0</span>)
+        System.arraycopy(elementData, index+<span class="hljs-number">1</span>, elementData, index,
+                         numMoved);
+    elementData[--size] = <span class="hljs-keyword">null</span>; <span class="hljs-comment">// clear to let GC do its work</span>
+
+    <span class="hljs-keyword">return</span> oldValue;
+&#125;
+<span class="hljs-comment">//2. 移除指定元素，这里是先遍历寻找是否有指定元素，如果有调用fastRemove()</span>
+ <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">remove</span><span class="hljs-params">(Object o)</span> </span>&#123;
+     <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">null</span>) &#123;
+         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> index = <span class="hljs-number">0</span>; index &lt; size; index++)
+             <span class="hljs-keyword">if</span> (elementData[index] == <span class="hljs-keyword">null</span>) &#123;
+                 fastRemove(index);
+                 <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+             &#125;
+     &#125; <span class="hljs-keyword">else</span> &#123;
+         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> index = <span class="hljs-number">0</span>; index &lt; size; index++)
+             <span class="hljs-keyword">if</span> (o.equals(elementData[index])) &#123;
+                 fastRemove(index);
+                 <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+             &#125;
+     &#125;
+     <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+&#125;
+<span class="hljs-comment">// fastRemove()，用来移除元素，并将index后面的元素向前移动一个位置</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">fastRemove</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>&#123;
+    modCount++;
+    <span class="hljs-keyword">int</span> numMoved = size - index - <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">if</span> (numMoved &gt; <span class="hljs-number">0</span>)
+        System.arraycopy(elementData, index+<span class="hljs-number">1</span>, elementData, index,
+                         numMoved);
+    elementData[--size] = <span class="hljs-keyword">null</span>; <span class="hljs-comment">// clear to let GC do its work</span>
+&#125;</code></pre>
+
+<p><code>set()</code></p>
+<pre><code class="hljs Java"><span class="hljs-comment">// set()方法用来更新指定位置的数据</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">set</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, E element)</span> </span>&#123;
+    <span class="hljs-comment">// 判断下标是否越界</span>
+    rangeCheck(index);
+	<span class="hljs-comment">// 没有越界，更新指定位置元素，并返回旧元素值</span>
+    E oldValue = elementData(index);
+    elementData[index] = element;
+    <span class="hljs-keyword">return</span> oldValue;
+&#125;</code></pre>
+
+<h4 id="ArrayList总结"><a href="#ArrayList总结" class="headerlink" title="ArrayList总结"></a>ArrayList总结</h4><ul>
+<li>ArrayList是基于动态数组(数组+扩容机制)实现的，在增删的时候会涉及数组的赋值，会影响性能</li>
+<li>ArrayList默认容量为10，扩容时先扩容1.5倍。</li>
+<li>根据<code>remove(Object o)</code>我们发现，ArrayList可以存放null值。</li>
+<li>ArrayList内部实现时，并没有涉及到线程安全的问题，当多线程操作同一个ArrayList时会出现线程安全问题。如果想保证线程安全请使用<code>CopyOnWriteArrayList</code></li>
+</ul>
+<h3 id="2-LinkedList详解"><a href="#2-LinkedList详解" class="headerlink" title="2.LinkedList详解"></a>2.LinkedList详解</h3><h4 id="首先，还是从成员变量入手吧！"><a href="#首先，还是从成员变量入手吧！" class="headerlink" title="首先，还是从成员变量入手吧！"></a>首先，还是从成员变量入手吧！</h4><p><img src="/img/Java/LinkedList%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7.png" srcset="/img/loading.gif" alt="LinkedList成员属性"></p>
+<p>相对于ArrayList来说成员属性少了很多！</p>
+<p>这里我们看一下<code>Node</code>这个静态内部类</p>
+<pre><code class="hljs Java"><span class="hljs-comment">// 也很简单，Node中包含一个存储内容的E，一个前驱指针prev，一个后继指针next</span>
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;
+    E item;
+    Node&lt;E&gt; next;
+    Node&lt;E&gt; prev;
+
+    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;
+        <span class="hljs-keyword">this</span>.item = element;
+        <span class="hljs-keyword">this</span>.next = next;
+        <span class="hljs-keyword">this</span>.prev = prev;
+    &#125;
+&#125;</code></pre>
+
+
+
+<h4 id="接下来我们看下LinkedList的构造方法！"><a href="#接下来我们看下LinkedList的构造方法！" class="headerlink" title="接下来我们看下LinkedList的构造方法！"></a>接下来我们看下LinkedList的构造方法！</h4><p><img src="/img/Java/LinkedList%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95.png" srcset="/img/loading.gif" alt="LinkedList构造方法"></p>
+<p>这里也没什么特别指定一提的。</p>
+<p><em>这个<code>addAll()</code>我先挖个坑吧，以后有时间我在补上。先把我认为最重要的都写完，回头我在补上~希望大家理解理解理解！</em></p>
+<h4 id="继续！我们来看看LinkedList的其他方法！"><a href="#继续！我们来看看LinkedList的其他方法！" class="headerlink" title="继续！我们来看看LinkedList的其他方法！"></a>继续！我们来看看LinkedList的其他方法！</h4><p><code>add()</code></p>
+<p>其实LinkedList还有其他的<code>add()</code>比如，<code>addFirst()</code>，<code>addLast()</code>，就是将节点添加到头或者尾。这里就不过多赘述。</p>
+<pre><code class="hljs Java"><span class="hljs-comment">// 可以看到，相当之简单啊！比起ArrayList的add()，简单了相当多了。接下来我们看看linkLast()。其实addLast()也是调用的这个linkLast()。你猜猜addFirst()，调用的是linkXXXXX()什么呢？😀</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>&#123;
+    linkLast(e);
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+&#125;
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * Links e as last element.</span>
+<span class="hljs-comment"> * 官方文档也说的很清楚，把节点e作为最后一个元素连接在链表上。</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">linkLast</span><span class="hljs-params">(E e)</span> </span>&#123;
+    <span class="hljs-comment">// 这里说实话也没什么好解释的，就是简单的双向链表操作。而且还是连接在尾部，操作更简单了。</span>
+    <span class="hljs-comment">// l指向尾节点</span>
+    <span class="hljs-keyword">final</span> Node&lt;E&gt; l = last;
+    <span class="hljs-comment">// 创建新新节点，新节点的前驱是l，后继为null</span>
+    <span class="hljs-keyword">final</span> Node&lt;E&gt; newNode = <span class="hljs-keyword">new</span> Node&lt;&gt;(l, e, <span class="hljs-keyword">null</span>);
+    <span class="hljs-comment">// 把链表的尾指针指向新节点</span>
+    last = newNode;
+    <span class="hljs-comment">// 如果l等于null的话，就证明目前链表是空的，newNode是第一个节点</span>
+    <span class="hljs-keyword">if</span> (l == <span class="hljs-keyword">null</span>)
+        <span class="hljs-comment">// 让头指针指向新节点</span>
+        first = newNode;
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-comment">// l不等于null的话，就证明目前链表有元素，直接让l的后继变成newNode就完成了连接</span>
+        l.next = newNode;
+    <span class="hljs-comment">// 元素个数加1</span>
+    size++;
+    modCount++;
+&#125;</code></pre>
+
+<p><code>remove()</code></p>
+<p>其实LinkedList作为双向链表来说有<code>remove()</code>，作为队列来说有<code>poll()</code>和<code>remove()</code>。</p>
+<p><code>remove()</code>和<code>poll()</code>区别在于，如果要移除的元素不存在，那么<code>remove()</code>会抛出异常，<code>poll()</code>会返回null。</p>
+<p>这里我是作为双向链表来说的~所以说一下<code>remove()</code>吧，就<code>remove()</code>就有好多种。如<code>removeFirst()</code>，<code>removeLast()</code>。而且根据传入参数的不同<code>remove()</code>还有移除指定位置上的元素<code>remove(int index)</code>，移除指定元素<code>remove(Object o)</code>，这里我就说一下<code>remove(Object o)</code></p>
+<pre><code class="hljs Java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">remove</span><span class="hljs-params">(Object o)</span> </span>&#123;
+    <span class="hljs-comment">// 如果o为null，</span>
+    <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">null</span>) &#123;
+        <span class="hljs-comment">// for循环中寻找null元素</span>
+        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="hljs-keyword">null</span>; x = x.next) &#123;
+            <span class="hljs-keyword">if</span> (x.item == <span class="hljs-keyword">null</span>) &#123;
+                <span class="hljs-comment">// 拆解元素</span>
+                unlink(x);
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+        &#125;
+    &#125; <span class="hljs-keyword">else</span> &#123;
+        <span class="hljs-comment">// 如果o不为null，for循环中寻找元素o</span>
+        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="hljs-keyword">null</span>; x = x.next) &#123;
+            <span class="hljs-keyword">if</span> (o.equals(x.item)) &#123;
+                <span class="hljs-comment">// 拆解元素</span>
+                unlink(x);
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+        &#125;
+    &#125;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+&#125;
+
+<span class="hljs-comment">// 这里给一下unlink()</span>
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * Unlinks non-null node x.</span>
+<span class="hljs-comment"> * 解绑一个非空元素，ps：官方文档写的真专业。希望自己也可以成为这样的程序员</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-function">E <span class="hljs-title">unlink</span><span class="hljs-params">(Node&lt;E&gt; x)</span> </span>&#123;
+    <span class="hljs-comment">// 声明 x != null;因为找到了指定元素才会进入这个方法...所以x != null，我是这样理解的，如果有不一样的理解请务必联系我并指出！感谢感谢！</span>
+    <span class="hljs-keyword">final</span> E element = x.item;
+    <span class="hljs-comment">// 拿到x的后继节点</span>
+    <span class="hljs-keyword">final</span> Node&lt;E&gt; next = x.next;
+    <span class="hljs-comment">// 拿到x的前驱节点</span>
+    <span class="hljs-keyword">final</span> Node&lt;E&gt; prev = x.prev;
+	
+    <span class="hljs-comment">// 如果前驱节点为null，那就说明x为头节点，头指针first应该修改为x的后继节点</span>
+    <span class="hljs-keyword">if</span> (prev == <span class="hljs-keyword">null</span>) &#123;
+        first = next;
+    &#125; <span class="hljs-keyword">else</span> &#123;
+        <span class="hljs-comment">// 如果前驱不为null，那就将next作为前驱节点的后继节点</span>
+        prev.next = next;
+        <span class="hljs-comment">// 再将x的前驱节点变成null，断开连接</span>
+        x.prev = <span class="hljs-keyword">null</span>;
+    &#125;
+	
+    <span class="hljs-comment">// 如果后继节点为null，那就说明x为尾节点，尾指针last应该修改为x的前驱节点</span>
+    <span class="hljs-keyword">if</span> (next == <span class="hljs-keyword">null</span>) &#123;
+        last = prev;
+    &#125; <span class="hljs-keyword">else</span> &#123;
+        <span class="hljs-comment">// 如果后继不为null，那就将prev作为后继节点的前驱节点</span>
+        next.prev = prev;
+        <span class="hljs-comment">// 再将x的后继节点变成bull，断开连接</span>
+        x.next = <span class="hljs-keyword">null</span>;
+    &#125;
+	
+    <span class="hljs-comment">// 将x的内容变为null，便于JVM进行回收</span>
+    x.item = <span class="hljs-keyword">null</span>;
+    size--;
+    modCount++;
+    <span class="hljs-keyword">return</span> element;
+&#125;</code></pre>
+
+<p>从上面看下来，我觉得只要熟悉双向链表就能熟悉LinkedList的双向链表模式了。</p>
+<p><em>LinkedList的Queue模式，之后我会作为队列单独说</em></p>
+<p><code>get()</code></p>
+<p>话不多说，直接上源码~</p>
+<pre><code class="hljs Java"><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>&#123;
+    <span class="hljs-comment">// 检查传入的下标是否大于LinedList元素的个数，如果大于抛出异常。</span>
+    checkElementIndex(index);
+    <span class="hljs-comment">// 直接调用node方法，返回一个Node节点，然后返回Node中的内容</span>
+    <span class="hljs-keyword">return</span> node(index).item;
+&#125;
+
+<span class="hljs-comment">// 我们看下node()</span>
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * Returns the (non-null) Node at the specified element index.</span>
+<span class="hljs-comment"> * 返回一个特殊位置的非空Node节点</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-function">Node&lt;E&gt; <span class="hljs-title">node</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>&#123;
+    <span class="hljs-comment">// 这里有点意思，如果下标index小于size的一半(&gt;&gt; 相当于除于2)，就从头找</span>
+    <span class="hljs-keyword">if</span> (index &lt; (size &gt;&gt; <span class="hljs-number">1</span>)) &#123;
+        Node&lt;E&gt; x = first;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; index; i++)
+            x = x.next;
+        <span class="hljs-keyword">return</span> x;
+    <span class="hljs-comment">// 大于size的一半就从尾找，充分利用了双向链表的特性！</span>
+    &#125; <span class="hljs-keyword">else</span> &#123;
+        Node&lt;E&gt; x = last;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = size - <span class="hljs-number">1</span>; i &gt; index; i--)
+            x = x.prev;
+        <span class="hljs-keyword">return</span> x;
+    &#125;
+&#125;</code></pre>
+
+<h4 id="LinkedList总结"><a href="#LinkedList总结" class="headerlink" title="LinkedList总结"></a>LinkedList总结</h4><p>其实相对于ArrayList来说少了很多，但其实两者都很重要，选择合适的时机使用合适的集合才是关键！</p>
+<ul>
+<li>底层是使用双向链表实现的</li>
+<li>可以存储null值</li>
+</ul>
 <h3 id="3-HashMap详解"><a href="#3-HashMap详解" class="headerlink" title="3.HashMap详解"></a>3.HashMap详解</h3><p>敬请期待……</p>
 <h3 id="4-ConcurrentHashmap详解"><a href="#4-ConcurrentHashmap详解" class="headerlink" title="4.ConcurrentHashmap详解"></a>4.ConcurrentHashmap详解</h3><p>敬请期待……</p>
 
