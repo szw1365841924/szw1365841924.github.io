@@ -19,7 +19,7 @@
   <meta name="description" content="">
   <meta name="author" content="Su ZhenWei">
   <meta name="keywords" content="">
-  <title>图书系列-Java高并发程序设计 - Szw&#39;s Blog</title>
+  <title>Java系列-数据类型 - Szw&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
@@ -129,8 +129,8 @@
               
                 <div class="mt-3 post-meta">
                   <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-                  <time datetime="2020-05-01 11:54">
-                    星期五, 五月 1日 2020, 11:54 中午
+                  <time datetime="2020-05-02 10:44">
+                    星期六, 五月 2日 2020, 10:44 上午
                   </time>
                 </div>
               
@@ -140,7 +140,7 @@
                   
                   <span class="post-meta mr-2">
                     <i class="iconfont icon-chart"></i>
-                    55 字
+                    618 字
                   </span>
                 
 
@@ -150,7 +150,7 @@
                       <i class="iconfont icon-clock-fill"></i>
                     
                     
-                    1
+                    7
                      分钟
                   </span>
                 
@@ -179,7 +179,102 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h3 id="第一章-走入并行世界"><a href="#第一章-走入并行世界" class="headerlink" title="第一章  走入并行世界"></a>第一章  走入并行世界</h3><h3 id="第二章-Java并行程序基础"><a href="#第二章-Java并行程序基础" class="headerlink" title="第二章  Java并行程序基础"></a>第二章  Java并行程序基础</h3><h3 id="第三章-JDK并发包"><a href="#第三章-JDK并发包" class="headerlink" title="第三章  JDK并发包"></a>第三章  JDK并发包</h3><h3 id="第四章-锁的优化及注意事项"><a href="#第四章-锁的优化及注意事项" class="headerlink" title="第四章  锁的优化及注意事项"></a>第四章  锁的优化及注意事项</h3><h3 id="第五章-并行模式与算法"><a href="#第五章-并行模式与算法" class="headerlink" title="第五章  并行模式与算法"></a>第五章  并行模式与算法</h3><h3 id="第六章-Java8与并发"><a href="#第六章-Java8与并发" class="headerlink" title="第六章  Java8与并发"></a>第六章  Java8与并发</h3>
+              <p>因为之前面试碰到了~所以记录一下</p>
+<h3 id="Java中基本数据类型都有哪些？分别占多少位？"><a href="#Java中基本数据类型都有哪些？分别占多少位？" class="headerlink" title="Java中基本数据类型都有哪些？分别占多少位？"></a>Java中基本数据类型都有哪些？分别占多少位？</h3><table>
+<thead>
+<tr>
+<th>基本数据类型</th>
+<th>占位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>8</td>
+</tr>
+<tr>
+<td>char</td>
+<td>16</td>
+</tr>
+<tr>
+<td>short</td>
+<td>16</td>
+</tr>
+<tr>
+<td>int</td>
+<td>32</td>
+</tr>
+<tr>
+<td>float</td>
+<td>32</td>
+</tr>
+<tr>
+<td>long</td>
+<td>64</td>
+</tr>
+<tr>
+<td>double</td>
+<td>64</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>~</td>
+</tr>
+</tbody></table>
+<p>boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。</p>
+<p><strong>例题：</strong></p>
+<pre><code class="hljs java"><span class="hljs-keyword">byte</span> s1 = (<span class="hljs-keyword">byte</span>) <span class="hljs-number">130</span>;
+<span class="hljs-comment">// 问：上面这个s1结果是什么？</span></code></pre>
+
+<p>这类问题考的就是溢出</p>
+<p><strong>分析：</strong></p>
+<p>计算机中数据的运算都是补码进行的。 而要得到补码，首先要计算出数据的二进制。</p>
+<ol>
+<li><p>首先获取130这个数据的二进制数：</p>
+<p>00000000 00000000 00000000 10000010，因为它是正数，所以这串二进制数既是原码也是补码还是反码</p>
+</li>
+<li><p>做截取操作，截成byte类型(是在补码的状态下截取的)的了，10000010这个结果是补码</p>
+</li>
+<li><p>已知补码求原码</p>
+<ul>
+<li>补码：10000010          —补码减1变成反码</li>
+<li>反码: 10000001            —除了第一位符号位不变，其他各位取反,变成原码</li>
+<li>原码：11111110          —输出结果为-126</li>
+</ul>
+</li>
+</ol>
+<h3 id="Java中的包装类型"><a href="#Java中的包装类型" class="headerlink" title="Java中的包装类型"></a>Java中的包装类型</h3><p>基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。</p>
+<pre><code class="hljs Java">Integer x = <span class="hljs-number">2</span>;     <span class="hljs-comment">// 装箱 调用了 Integer.valueOf(2)</span>
+<span class="hljs-keyword">int</span> y = x;         <span class="hljs-comment">// 拆箱 调用了 X.intValue()</span></code></pre>
+
+<h3 id="缓存池"><a href="#缓存池" class="headerlink" title="缓存池"></a>缓存池</h3><p>ew Integer(123) 与 Integer.valueOf(123) 的区别在于：</p>
+<ul>
+<li><p>new Integer(123) 每次都会新建一个对象；</p>
+</li>
+<li><p>Integer.valueOf(123) 会使用缓存池中的对象，多次调用会取得同一个对象的引用。</p>
+<pre><code class="hljs Java">Integer x = <span class="hljs-keyword">new</span> Integer(<span class="hljs-number">123</span>);
+Integer y = <span class="hljs-keyword">new</span> Integer(<span class="hljs-number">123</span>);
+System.out.println(x == y);    <span class="hljs-comment">// false</span>
+Integer z = Integer.valueOf(<span class="hljs-number">123</span>);
+Integer k = Integer.valueOf(<span class="hljs-number">123</span>);
+System.out.println(z == k);   <span class="hljs-comment">// true</span>
+System.out.println(x == z); <span class="hljs-comment">// false</span></code></pre>
+
+<p>valueOf() 方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容。</p>
+<pre><code class="hljs Java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Integer <span class="hljs-title">valueOf</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>&#123;
+    <span class="hljs-keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)
+        <span class="hljs-keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Integer(i);
+&#125;</code></pre>
+
+<p>在 Java 8 中，Integer 缓存池的大小默认为 -128~127。</p>
+<p>编译器会在自动装箱过程调用 valueOf() 方法，因此多个值相同且值在缓存池范围内的 Integer 实例使用自动装箱来创建，那么就会引用相同的对象。</p>
+<pre><code class="hljs Java">Integer m = <span class="hljs-number">123</span>;
+Integer n = <span class="hljs-number">123</span>;
+System.out.println(m == n); <span class="hljs-comment">// true</span></code></pre>
+
+</li>
+</ul>
+
             </article>
             <hr>
             <div>
@@ -188,7 +283,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E5%9B%BE%E4%B9%A6%E9%A6%86/">图书馆</a>
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
                     
                   </div>
                 
@@ -196,7 +291,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%9B%BE%E4%B9%A6%E9%A6%86/">图书馆</a>
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
                     
                   </div>
                 
@@ -209,18 +304,12 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/05/02/Web/%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/index/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">跨域问题</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/04/26/MySQL/%E7%B4%A2%E5%BC%95/index/">
-                        <span class="hidden-mobile">MySQL系列-索引</span>
+                      <a href="/2020/05/02/Web/%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/index/">
+                        <span class="hidden-mobile">跨域问题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -338,7 +427,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "图书系列-Java高并发程序设计&nbsp;",
+        "Java系列-数据类型&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
