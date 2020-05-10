@@ -140,7 +140,7 @@
                   
                   <span class="post-meta mr-2">
                     <i class="iconfont icon-chart"></i>
-                    1.7k 字
+                    3.4k 字
                   </span>
                 
 
@@ -150,7 +150,7 @@
                       <i class="iconfont icon-clock-fill"></i>
                     
                     
-                    18
+                    36
                      分钟
                   </span>
                 
@@ -306,11 +306,239 @@
 <li>表记录太少</li>
 <li>经常增删改的表或字段</li>
 <li>where条件中用不到的字段</li>
-<li>过滤性不好的字段 <strong><em>这里我在学习的时候没有想通，如果有大佬理解，还请教教我！感谢！</em></strong></li>
+<li>过滤性不好的字段 <strong><em>这里我在学习的时候没有想通，如果有大佬理解，还望不吝赐教！感谢！</em></strong></li>
 </ul>
 </li>
 </ol>
-<h3 id="6-索引优化"><a href="#6-索引优化" class="headerlink" title="6.索引优化"></a>6.索引优化</h3><p>敬请期待……</p>
+<h3 id="6-性能分析-Explain"><a href="#6-性能分析-Explain" class="headerlink" title="6.性能分析-Explain"></a>6.性能分析-Explain</h3><ul>
+<li><p>简介</p>
+<p>使用<code>EXPLAIN</code>关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的，进一步分析你的查询语句或是表的结构的性能瓶颈。</p>
+</li>
+<li><p>作用</p>
+<ol>
+<li>查看表的读取顺序</li>
+<li>哪些索引可以使用</li>
+<li>数据读取操作的操作类型</li>
+<li><strong>哪些索引被实际使用</strong></li>
+<li>表之间的引用</li>
+<li><strong>每张表有多少行被物理查询</strong></li>
+</ol>
+</li>
+<li><p>如何使用</p>
+<pre><code class="hljs mysql">例：
+EXPLAIN SELECT * FROM tb_user</code></pre>
+
+<p><img src="/img/MySQL/Explain%E7%BB%93%E6%9E%9C%E5%9B%BE.png" srcset="/img/loading.gif" alt="Explain结果图"></p>
+</li>
+<li><p>各个字段的解释</p>
+<p><em>加粗并带下划线的是重点！！！</em></p>
+<ol>
+<li><p><u><strong>id</strong></u></p>
+<ul>
+<li><p>含义：select查询的序列号，包含一组数字表示查询中执行select子句或操作表的顺序</p>
+</li>
+<li><p>包含以下三种情况</p>
+<ol>
+<li><p>id相同时，执行顺序从上到下</p>
+<p><img src="/img/MySQL/id%E6%83%85%E5%86%B5_1.png" srcset="/img/loading.gif" alt="id情况_1"></p>
+</li>
+<li><p>id不同，如果是子查询id序号会递增，id值越大优先级越高，越先被执行<img src="/img/MySQL/id%E6%83%85%E5%86%B5_2.png" srcset="/img/loading.gif" alt="id情况_2"></p>
+</li>
+<li><p>既有相同id，也有不同id时，执行顺序先看id序号最大的，如果id序号相同在从上向下看</p>
+<p><img src="/img/MySQL/id%E6%83%85%E5%86%B5_3.png" srcset="/img/loading.gif" alt="id情况_3"></p>
+</li>
+</ol>
+</li>
+<li><p><strong>重点</strong>：id序号每个不同的号码，代表一次独立的查询。一个SQL的查询趟数越少越好。</p>
+</li>
+</ul>
+</li>
+<li><p>select_type</p>
+<ul>
+<li><p>含义：查询的类型，主要用于区别普通查询、联合查询、子查询等复杂查询</p>
+</li>
+<li><p>种类</p>
+<p><img src="/img/MySQL/select_type%E7%A7%8D%E7%B1%BB%E5%9B%BE.png" srcset="/img/loading.gif" alt="select_type种类图"></p>
+<ol>
+<li><p>SIMPLE</p>
+<p>简单的select查询，查询中不包含子查询后者union<img src="/img/MySQL/select_type_simple.png" srcset="/img/loading.gif" alt="select_type_simple"></p>
+</li>
+<li><p>PRIMARY</p>
+<p>查询中若包含任何复杂的子部分，最外层查询则被标记为PRIMARY<img src="/img/MySQL/select_type_primary.png" srcset="/img/loading.gif" alt="select_type_primary"></p>
+</li>
+<li><p>DERIVED</p>
+<p>在FROM列表中包含的子查询被标记为DERIVED(衍生表)，MySQL会递归执行这些子查询，把结果放在衍生表中。</p>
+</li>
+<li><p>SUBQUERY</p>
+<p>在select或where列表中包含了子查询<img src="/img/MySQL/select_type_subquery.png" srcset="/img/loading.gif" alt="select_type_subquery"></p>
+</li>
+<li><p>DEPENDENT SUBQUERY</p>
+<p>在select或where列表中包含了子查询，子查询基于外层</p>
+<p><img src="/img/MySQL/select_type_DEPENDENTSUBQUERY.png" srcset="/img/loading.gif" alt="select_type_DEPENDENTSUBQUERY"></p>
+</li>
+<li><p>UNCACHEABLE SUBQUERY</p>
+</li>
+<li><p>UNION</p>
+<p>若第二个select出现在UNION之后，则被标记为UNION；</p>
+<p>若UNION包含在FROM子句的子查询中，外层select将被标记为DERIVED<img src="/img/MySQL/select_type_UNION.png" srcset="/img/loading.gif" alt="select_type_UNION"></p>
+</li>
+<li><p>UNION RESULT</p>
+<p>从UNION表获取结果的select<img src="/img/MySQL/select_type_union_result.png" srcset="/img/loading.gif" alt="select_type_union_result"></p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>table</p>
+<ul>
+<li>含义：显示这一行的数据是关于那张表的</li>
+</ul>
+</li>
+<li><p>partitions</p>
+<ul>
+<li>含义：代表分区表中的命中情况，非分区表，该项为null</li>
+</ul>
+</li>
+<li><p><u><strong>tpye</strong></u></p>
+<ul>
+<li><p>含义：显示查询使用了何种类型<img src="/img/MySQL/type%E7%A7%8D%E7%B1%BB%E5%9B%BE.png" srcset="/img/loading.gif" alt="type种类图"></p>
+</li>
+<li><p>种类</p>
+<ol>
+<li><p>system</p>
+<p>表中只有一行记录(等于系统表)，这是const类型的特里，平时不会出现，这个可以忽略不计</p>
+</li>
+<li><p>const</p>
+<p>表示通过索引一次就找到了，const用于比较primary key或者unique索引。因为只匹配一行数据，所以速度很快。</p>
+<p>如将主键放置于where列表中，MySQL就能将这次查询转化为一个常量</p>
+<p><img src="/img/MySQL/type_const.png" srcset="/img/loading.gif" alt="type_const"></p>
+</li>
+<li><p>eq_ref</p>
+<p>唯一性索引扫描，对于每个索引键，表中只有一条记录与之匹配。常见于主键或唯一索引扫描。</p>
+<p><img src="/img/MySQL/type_eq_ref.png" srcset="/img/loading.gif" alt="type_eq_ref"></p>
+</li>
+<li><p>ref</p>
+<p>非唯一性索引扫描，返回匹配某个单独值的所有行。本质上也是使用索引访问，但是可能会返回多个匹配某个单独值的行，所以应该属于查找和扫描的混合体</p>
+<p>例：</p>
+<p>没有使用索引时，两个全表扫描</p>
+<p><img src="/img/MySQL/type_ref.png" srcset="/img/loading.gif" alt="type_ref"></p>
+<p>建立了索引，第二个变成了ref</p>
+<p><img src="/img/MySQL/type_ref2.png" srcset="/img/loading.gif" alt="type_ref2"></p>
+</li>
+<li><p><u><strong>range</strong></u></p>
+<p>只检索给定范围的行，使用一个索引来选择行。key列显示使用那个索引，一般就是在你的where语句中出现了between、&lt;、&gt;、in等的查询。这种范围内扫描索引比全表扫描好，因为它只需要开始于索引的某一点，结束于另一点，不用全部扫描索引</p>
+<p>例1：</p>
+<p><img src="/img/MySQL/type_range1.png" srcset="/img/loading.gif" alt="type_range1"></p>
+<p>例2：</p>
+<p><img src="/img/MySQL/type_range2.png" srcset="/img/loading.gif" alt="type_range2"></p>
+</li>
+<li><p><u><strong>index</strong></u></p>
+<p>出现index是SQL使用了索引但是没有通过索引进行过滤，一般是使用了覆盖索引或者是利用了索引进行排序分组<img src="/img/MySQL/type_index.png" srcset="/img/loading.gif" alt="type_index"></p>
+</li>
+<li><p><u><strong>all</strong></u></p>
+<p>将遍历全表以找到匹配的行</p>
+<p><img src="/img/MySQL/type_all.png" srcset="/img/loading.gif" alt="type_all"></p>
+</li>
+<li><p>index_merge</p>
+<p>在查询过程中需要多个索引组合使用，通常出现在有or的关键字的SQL中</p>
+<p><img src="/img/MySQL/type_index_merge.png" srcset="/img/loading.gif" alt="type_index_merge"></p>
+</li>
+<li><p>ref_or_null</p>
+<p>对于某个字段既需要关联条件，也需要null值的情况下，查询优化器会选择用ref_or_null连接查询</p>
+<p><img src="/img/MySQL/ref_or_null.png" srcset="/img/loading.gif" alt="ref_or_null"></p>
+</li>
+<li><p>index_subquery</p>
+<p>利用索引来关联子查询，不用全表扫描</p>
+<p><img src="/img/MySQL/type_index_subquery.png" srcset="/img/loading.gif" alt="type_index_subquery"></p>
+</li>
+<li><p>unique_subquery</p>
+<p>该联接类型类似于index_subquery。子查询中的唯一索引</p>
+<p><img src="/img/MySQL/type_unique_subquery.png" srcset="/img/loading.gif" alt="type_unique_subquery"></p>
+</li>
+</ol>
+</li>
+<li><p><strong>总结</strong>：一般来说最好保证查询至少达到range级别，最好能达到ref。</p>
+<p>​            ref &gt; range &gt; index &gt; all</p>
+</li>
+</ul>
+</li>
+<li><p>possible_keys</p>
+<ul>
+<li>含义：显示可能应用在这张表中的索引，一个或多个。查询涉及到的字段上若存在索引，则该索引将被列出，但不一定被实际查询使用。</li>
+</ul>
+</li>
+<li><p>key</p>
+<ul>
+<li>含义：实际查询中使用的索引，如果为null，则没有使用索引。查询中若使用覆盖索引，则该索引和查询的select字段重叠。</li>
+</ul>
+</li>
+<li><p><u><strong>key_len</strong></u></p>
+<ul>
+<li><p>含义：表示索引中使用的字节数，可通过该列计算查询中使用的索引长度。key_len字段可以帮你检查是否充分利用上了索引</p>
+<p><img src="/img/MySQL/key_len.png" srcset="/img/loading.gif" alt="key_len"></p>
+</li>
+</ul>
+</li>
+<li><p>ref</p>
+<ul>
+<li><p>含义：显示索引的哪一列被使用了，哪些列或常量被用于查找索引列上的值。</p>
+<p><img src="/img/MySQL/ref.png" srcset="/img/loading.gif" alt="ref"></p>
+</li>
+</ul>
+</li>
+<li><p><u><strong>rows</strong></u></p>
+<ul>
+<li>含义：显示MySQL认为它执行查询时必须检查的行数——越少越好</li>
+</ul>
+</li>
+<li><p>filtered</p>
+<ul>
+<li>含义：这个字段表示存储引擎返回的数据在server层过滤后，剩下多少满足查询的记录数量的比例，注意是百分比，而不是具体记录数</li>
+</ul>
+</li>
+<li><p><u><strong>Extra</strong></u></p>
+<ul>
+<li><p>含义：包含不适合在其他列中显示，但十分重要的额外信息</p>
+</li>
+<li><p>种类：</p>
+<ol>
+<li><p><u><strong>Using filesort</strong></u></p>
+<p>说明MySQL会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取。</p>
+<p>MySQL无法利用索引完成的排序操作成为“文件排序”。</p>
+<p><em>必须优化！</em></p>
+<p>![Using filesort](/img/MySQL/Using filesort.png)</p>
+</li>
+<li><p><u><strong>Using temporary</strong></u></p>
+<p>使用了临时表保存中间结果，MySQL在对查询结果排序时使用临时表，常见于排序order by和分组查询group by![Using temporary](/img/MySQL/Using temporary.png)</p>
+<p>![Using temporary2](/img/MySQL/Using temporary2.png)</p>
+</li>
+<li><p>Using index</p>
+<p>表示相应的select操作中使用了覆盖索引，避免访问了表的数据行，<em>相比于前两种，效率很高</em></p>
+<p>如果同时出现Using where，表明索引被用来执行索引键值的查找</p>
+<p>如果没有出现Using where，表明索引只是用来读取数据而非利用索引执行查找</p>
+</li>
+<li><p>Using where</p>
+<p>表明使用了where过滤</p>
+</li>
+<li><p><u><strong>Using join buffer</strong></u></p>
+<p>使用了连接缓存</p>
+<p>![Using join buffer](/img/MySQL/Using join buffer.png)</p>
+</li>
+<li><p>impossible where</p>
+<p>where子句的值总是false，不能用来获取任何元组</p>
+<p>![impossible where](/img/MySQL/impossible where.png)</p>
+</li>
+<li><p>select tables optimized away</p>
+<p>在没有group by子句的情况下，基于索引优化MIN/MAX操作或者对于MyISAM存储引擎优化COUNT(*)操作，不必等到执行阶段在进行计算，查询执行计划生成的阶段即完成优化。</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="7-查询优化"><a href="#7-查询优化" class="headerlink" title="7.查询优化"></a>7.查询优化</h3><p>敬请期待……<u></u></p>
 
             </article>
             <hr>
