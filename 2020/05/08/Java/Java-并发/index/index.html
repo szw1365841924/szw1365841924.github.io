@@ -140,7 +140,7 @@
                   
                   <span class="post-meta mr-2">
                     <i class="iconfont icon-chart"></i>
-                    1.7k 字
+                    1.9k 字
                   </span>
                 
 
@@ -150,7 +150,7 @@
                       <i class="iconfont icon-clock-fill"></i>
                     
                     
-                    22
+                    25
                      分钟
                   </span>
                 
@@ -180,7 +180,7 @@
             
             <article class="markdown-body">
               <p>总结一下自己在学习并发编程时遇到的知识点~</p>
-<h3 id="一、线程的基本操作"><a href="#一、线程的基本操作" class="headerlink" title="一、线程的基本操作"></a>一、线程的基本操作</h3><h4 id="一、使用线程的三种方法"><a href="#一、使用线程的三种方法" class="headerlink" title="一、使用线程的三种方法"></a>一、使用线程的三种方法</h4><h5 id="1-继承Thread类，并实现run-方法"><a href="#1-继承Thread类，并实现run-方法" class="headerlink" title="1. 继承Thread类，并实现run()方法"></a>1. 继承Thread类，并实现<code>run()</code>方法</h5><p>当<code>new</code>一个Thread或者Thread的子类后，线程进入新建状态。调用了线程的<code>start()</code>方法后，线程进入就绪状态，虚拟机会将线程放入就绪队列中等待被调用。当线程被调用时，就会执行<code>run()</code>方法中的内容。</p>
+<h3 id="一、线程的基础知识"><a href="#一、线程的基础知识" class="headerlink" title="一、线程的基础知识"></a>一、线程的基础知识</h3><h4 id="一、使用线程的三种方法"><a href="#一、使用线程的三种方法" class="headerlink" title="一、使用线程的三种方法"></a>一、使用线程的三种方法</h4><h5 id="1-继承Thread类，并实现run-方法"><a href="#1-继承Thread类，并实现run-方法" class="headerlink" title="1. 继承Thread类，并实现run()方法"></a>1. 继承Thread类，并实现<code>run()</code>方法</h5><p>当<code>new</code>一个Thread或者Thread的子类后，线程进入新建状态。调用了线程的<code>start()</code>方法后，线程进入就绪状态，虚拟机会将线程放入就绪队列中等待被调用。当线程被调用时，就会执行<code>run()</code>方法中的内容。</p>
 <pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyThread</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Thread</span></span>&#123;
     <span class="hljs-meta">@Override</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;
@@ -394,6 +394,33 @@
 <pre><code class="hljs Java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">native</span> <span class="hljs-keyword">void</span> <span class="hljs-title">yield</span><span class="hljs-params">()</span></span>;</code></pre>
 
 <p>这是一个静态方法，一旦执行，它会使当前线程让出CPU。注意让出CPU不是代表不执行，当前线程让出CPU后还会参与CPU的竞争，有可能让出CPU后又竞争到了CPU。</p>
+<h5 id="5-守护线程-Daemon"><a href="#5-守护线程-Daemon" class="headerlink" title="5. 守护线程(Daemon)"></a>5. 守护线程(Daemon)</h5><p>守护线程是一种特殊的线程，在后台完成一些系统性的服务，比如垃圾回收线程、JIT线程都可以理解为守护线程。当一个Java应用内，只有守护线程时，Java虚拟机就会自然退出。</p>
+<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+    Thread t1 = <span class="hljs-keyword">new</span> Thread()&#123;
+        <span class="hljs-meta">@Override</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;
+            <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>)&#123;
+                System.out.println(<span class="hljs-string">" I am alive~"</span>);
+                <span class="hljs-keyword">try</span> &#123;
+                    Thread.sleep(<span class="hljs-number">1000</span>);
+                &#125;<span class="hljs-keyword">catch</span> (InterruptedException e)&#123;
+                    e.printStackTrace();
+                &#125;
+            &#125;
+        &#125;
+    &#125;;
+    t1.setDaemon(<span class="hljs-keyword">true</span>);
+    t1.start();
+    <span class="hljs-keyword">try</span> &#123;
+        Thread.sleep(<span class="hljs-number">2000</span>);
+    &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;
+        e.printStackTrace();
+    &#125;
+&#125;</code></pre>
+
+<p>上面的代码中，设置守护线程必须在线程<code>start()</code>之前，否则会出现下面这个异常。但是程序可以继续执行，只是线程被当作用户线程而已。</p>
+<pre><code class="hljs Java">Exception in thread <span class="hljs-string">"main"</span> java.lang.IllegalThreadStateException</code></pre>
+
 
             </article>
             <hr>
@@ -434,8 +461,8 @@
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/05/03/Java/Java-%E5%AD%97%E7%AC%A6%E4%B8%B2/index/">
-                        <span class="hidden-mobile">Java系列-字符串</span>
+                      <a href="/2020/05/03/%E9%9D%A2%E7%BB%8F%E6%B1%87%E6%80%BB/index/">
+                        <span class="hidden-mobile">面试总结</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -19,7 +19,7 @@
   <meta name="description" content="">
   <meta name="author" content="Su ZhenWei">
   <meta name="keywords" content="">
-  <title>Java系列-字符串 - Szw&#39;s Blog</title>
+  <title>Java系列-Java基础 - Szw&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
@@ -129,8 +129,8 @@
               
                 <div class="mt-3 post-meta">
                   <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-                  <time datetime="2020-05-03 10:30">
-                    星期日, 五月 3日 2020, 10:30 上午
+                  <time datetime="2020-05-02 10:44">
+                    星期六, 五月 2日 2020, 10:44 上午
                   </time>
                 </div>
               
@@ -140,7 +140,7 @@
                   
                   <span class="post-meta mr-2">
                     <i class="iconfont icon-chart"></i>
-                    1.5k 字
+                    2.1k 字
                   </span>
                 
 
@@ -150,7 +150,7 @@
                       <i class="iconfont icon-clock-fill"></i>
                     
                     
-                    19
+                    25
                      分钟
                   </span>
                 
@@ -179,9 +179,91 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <p>总结一下自己学习String时碰到的知识点~</p>
-<p>Java中操作字符串可以使用<code>String</code>、<code>StringBuilder</code>、<code>StringBuffer</code>，这三个类</p>
-<h3 id="1-String"><a href="#1-String" class="headerlink" title="1. String"></a>1. String</h3><p>看一下Java中<code>String</code>类是什么样子的~</p>
+              <h3 id="一、数据类型"><a href="#一、数据类型" class="headerlink" title="一、数据类型"></a>一、数据类型</h3><p>由于Java是一种强类型语言，意味着必须为每一个变量声明一种类型。在Java中一共有<code>8种基本类型</code>，其中有<code>4种整型</code>、<code>2种浮点型</code>、<code>1种用于表示Unicode编码的字符的单元的字符类型char</code>、<code>1种用于表示真值的boolean</code>。</p>
+<h4 id="1-整型"><a href="#1-整型" class="headerlink" title="1. 整型"></a>1. 整型</h4><p>整型用于表示没有效数部分的数值，允许为负数。Java提供了<code>4种整型</code>，具体如下表</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">存储需求</th>
+<th align="center">取值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">int</td>
+<td align="center">4字节</td>
+<td align="center">-2 147 483 648~2 147 483 647</td>
+</tr>
+<tr>
+<td align="center">short</td>
+<td align="center">2字节</td>
+<td align="center">-32 768~32 767</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">8字节</td>
+<td align="center">-(2的32次方)~(2的32次方)</td>
+</tr>
+<tr>
+<td align="center">byte</td>
+<td align="center">1字节</td>
+<td align="center">-128~127</td>
+</tr>
+</tbody></table>
+<p>长整型(long)数值有一个后缀L(如：200L)。十六进制数值有一个前缀0x(如：0xCAFE)。八进制有一个前缀0(如：010 -&gt; 十进制的8)，八进制容易混淆，建议不要使用八进制常数。Java 7开始，加上前缀0b可以写二进制数(如：0b1001 -&gt; 9)，另外同样从Java 7开始，还可以为数字字面量加下划线，如1_000_000表示一百万，Java编译器会自动去除这些下划线。</p>
+<h4 id="2-浮点型"><a href="#2-浮点型" class="headerlink" title="2. 浮点型"></a>2. 浮点型</h4><p>浮点类型用于表示有小数部分的数值。Java有<code>2种浮点类型</code>，具体如下</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">存储需求</th>
+<th align="center">取值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">float</td>
+<td align="center">4字节</td>
+<td align="center">大约 ± 3.402 823 47E + 38F (有效位数6~7位)</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">8字节</td>
+<td align="center">大约± 1.797 693 134 862 315 70E + 308 (有效位数15位)</td>
+</tr>
+</tbody></table>
+<p>double表示这种类型的数值精度是float类型的两倍(有人称为双精度数值)。绝大部分情况下用double类型。float类型的数值有一个后缀 F (例如，3.14F)。没有 F 的浮点数值默认为double类型。</p>
+<h4 id="3-char类型"><a href="#3-char类型" class="headerlink" title="3. char类型"></a>3. char类型</h4><p>char类型用于表示单个字符。通常用来表示字符常量。例如：’A’是编码为65所对应的字符常量。与”A”不同，”A”是一个包含字符的字符串。Unicode编码单元可以表示为十六进制值，范围从\u0000到\Uffff。例如：\u03C0表示派。</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">存储需求</th>
+<th align="center">取值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">char</td>
+<td align="center">2字节</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h4 id="4-boolean类型"><a href="#4-boolean类型" class="headerlink" title="4. boolean类型"></a>4. boolean类型</h4><p>boolean类型有两个值：false和true，用来判定逻辑条件。在编译时会被编译成int类型，使用 1 来表示 true，0 表示 false。</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">存储需求</th>
+<th align="center">取值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">boolean</td>
+<td align="center">1字节</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h3 id="二、字符串"><a href="#二、字符串" class="headerlink" title="二、字符串"></a>二、字符串</h3><p>Java中操作字符串可以使用<code>String</code>、<code>StringBuilder</code>、<code>StringBuffer</code>，这三个类</p>
+<h4 id="1-String"><a href="#1-String" class="headerlink" title="1. String"></a>1. String</h4><p>看一下Java中<code>String</code>类是什么样子的~</p>
 <pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">String</span></span>
 <span class="hljs-class">    <span class="hljs-keyword">implements</span> <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Serializable</span>, <span class="hljs-title">Comparable</span>&lt;<span class="hljs-title">String</span>&gt;, <span class="hljs-title">CharSequence</span> </span>&#123;
     <span class="hljs-comment">/** The value is used for character storage. */</span>
@@ -249,7 +331,7 @@ s = s + <span class="hljs-string">"799"</span>;</code></pre>
 <p>请问上面的原始的String对象是否发生了改变？</p>
 <p>答案：没有，准确来说是”szw”这个对象没有发生改变，改变的是s指向了一个新的String对象，内容是”szw799”。</p>
 <p>因为<code>String</code>是不可变的呀，value数组可是被final修饰的啊。所以，在进行 + 拼接之后s就会指向一个新的字符串~</p>
-<h3 id="2-StringBuilder和StringBuffer"><a href="#2-StringBuilder和StringBuffer" class="headerlink" title="2. StringBuilder和StringBuffer"></a>2. StringBuilder和StringBuffer</h3><p>首先，<code>StringBuilder</code>和<code>StringBuffer</code>的共同点是：它俩都是可变的字符串对象。</p>
+<h4 id="2-StringBuilder和StringBuffer"><a href="#2-StringBuilder和StringBuffer" class="headerlink" title="2. StringBuilder和StringBuffer"></a>2. StringBuilder和StringBuffer</h4><p>首先，<code>StringBuilder</code>和<code>StringBuffer</code>的共同点是：它俩都是可变的字符串对象。</p>
 <p>其次，<code>StringBuilder</code>和<code>StringBuffer</code>的不同点是：前者是线程不安全的，而后者是线程安全的(使用<strong>synchronized</strong>保证线程安全)。</p>
 <p><code>StringBuilder</code>是从JDK 1.5开始引入的，所以在JDK 1.5之间不要使用<code>StringBuilder</code>。</p>
 <p><em>话说，还有人使用JDK 1.5吗。。。</em></p>
@@ -329,9 +411,9 @@ System.out.println(result.toString());</code></pre>
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/05/08/Java/Java-%E5%B9%B6%E5%8F%91/index/">
+                      <a href="/2020/05/03/%E9%9D%A2%E7%BB%8F%E6%B1%87%E6%80%BB/index/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java系列-并发</span>
+                        <span class="hidden-mobile">面试总结</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -339,8 +421,8 @@ System.out.println(result.toString());</code></pre>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/05/02/Java/Java-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index/">
-                        <span class="hidden-mobile">Java系列-数据类型</span>
+                      <a href="/2020/05/02/Web/%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/index/">
+                        <span class="hidden-mobile">跨域问题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -458,7 +540,7 @@ System.out.println(result.toString());</code></pre>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Java系列-字符串&nbsp;",
+        "Java系列-Java基础&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

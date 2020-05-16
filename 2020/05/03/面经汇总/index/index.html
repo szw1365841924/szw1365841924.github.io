@@ -19,7 +19,7 @@
   <meta name="description" content="">
   <meta name="author" content="Su ZhenWei">
   <meta name="keywords" content="">
-  <title>Java系列-数据类型 - Szw&#39;s Blog</title>
+  <title>面试总结 - Szw&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
@@ -129,8 +129,8 @@
               
                 <div class="mt-3 post-meta">
                   <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-                  <time datetime="2020-05-02 10:44">
-                    星期六, 五月 2日 2020, 10:44 上午
+                  <time datetime="2020-05-03 10:30">
+                    星期日, 五月 3日 2020, 10:30 上午
                   </time>
                 </div>
               
@@ -140,7 +140,7 @@
                   
                   <span class="post-meta mr-2">
                     <i class="iconfont icon-chart"></i>
-                    618 字
+                    635 字
                   </span>
                 
 
@@ -179,8 +179,8 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <p>因为之前面试碰到了~所以记录一下</p>
-<h3 id="Java中基本数据类型都有哪些？分别占多少位？"><a href="#Java中基本数据类型都有哪些？分别占多少位？" class="headerlink" title="Java中基本数据类型都有哪些？分别占多少位？"></a>Java中基本数据类型都有哪些？分别占多少位？</h3><table>
+              <p>因为之前面试碰到了~所以总结下自己面试过程中碰到的各种题</p>
+<h2 id="Java基础"><a href="#Java基础" class="headerlink" title="Java基础"></a>Java基础</h2><h3 id="1-Java中基本数据类型都有哪些？分别占多少位？"><a href="#1-Java中基本数据类型都有哪些？分别占多少位？" class="headerlink" title="1. Java中基本数据类型都有哪些？分别占多少位？"></a>1. Java中基本数据类型都有哪些？分别占多少位？</h3><table>
 <thead>
 <tr>
 <th>基本数据类型</th>
@@ -242,11 +242,11 @@
 </ul>
 </li>
 </ol>
-<h3 id="Java中的包装类型"><a href="#Java中的包装类型" class="headerlink" title="Java中的包装类型"></a>Java中的包装类型</h3><p>基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。</p>
+<h3 id="2-Java中的包装类型"><a href="#2-Java中的包装类型" class="headerlink" title="2. Java中的包装类型"></a>2. Java中的包装类型</h3><p>基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使用自动装箱与拆箱完成。</p>
 <pre><code class="hljs Java">Integer x = <span class="hljs-number">2</span>;     <span class="hljs-comment">// 装箱 调用了 Integer.valueOf(2)</span>
 <span class="hljs-keyword">int</span> y = x;         <span class="hljs-comment">// 拆箱 调用了 X.intValue()</span></code></pre>
 
-<h3 id="缓存池"><a href="#缓存池" class="headerlink" title="缓存池"></a>缓存池</h3><p>ew Integer(123) 与 Integer.valueOf(123) 的区别在于：</p>
+<h3 id="3-缓存池"><a href="#3-缓存池" class="headerlink" title="3. 缓存池"></a>3. 缓存池</h3><p>new Integer(123) 与 Integer.valueOf(123) 的区别在于：</p>
 <ul>
 <li><p>new Integer(123) 每次都会新建一个对象；</p>
 </li>
@@ -283,7 +283,7 @@ System.out.println(m == n); <span class="hljs-comment">// true</span></code></pr
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                      <a class="hover-with-bg" href="/categories/%E9%9D%A2%E8%AF%95%E6%B1%87%E6%80%BB/">面试汇总</a>
                     
                   </div>
                 
@@ -291,7 +291,7 @@ System.out.println(m == n); <span class="hljs-comment">// true</span></code></pr
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95%E6%B1%87%E6%80%BB/">面试汇总</a>
                     
                   </div>
                 
@@ -304,9 +304,9 @@ System.out.println(m == n); <span class="hljs-comment">// true</span></code></pr
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/05/03/Java/Java-%E5%AD%97%E7%AC%A6%E4%B8%B2/index/">
+                      <a href="/2020/05/08/Java/Java-%E5%B9%B6%E5%8F%91/index/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java系列-字符串</span>
+                        <span class="hidden-mobile">Java系列-并发</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -314,8 +314,8 @@ System.out.println(m == n); <span class="hljs-comment">// true</span></code></pr
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/05/02/Web/%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/index/">
-                        <span class="hidden-mobile">跨域问题</span>
+                      <a href="/2020/05/02/Java/Java-%E5%9F%BA%E7%A1%80/index/">
+                        <span class="hidden-mobile">Java系列-Java基础</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -433,7 +433,7 @@ System.out.println(m == n); <span class="hljs-comment">// true</span></code></pr
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Java系列-数据类型&nbsp;",
+        "面试总结&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

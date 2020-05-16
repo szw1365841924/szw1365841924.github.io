@@ -161,8 +161,7 @@
         
           
         
-        <div>敬请期待……
-</div>
+        <div>一、运行时数据区域</div>
       </a>
 
       <div class="index-btm post-metas">
@@ -203,7 +202,7 @@
           
         
         <div>总结一下自己在学习并发编程时遇到的知识点~
-一、线程的基本操作一、使用线程的三种方法1. 继承Thread类，并实现run()方法当new一个Thread或者Thread的子类后，线程进入新建状态。调用了线程的start()方法后，线程进入就绪状态，虚拟机会将线程放入就绪队列中等待被调用。当线程被调用时，就会执行run()方法中的内容。
+一、线程的基础知识一、使用线程的三种方法1. 继承Thread类，并实现run()方法当new一个Thread或者Thread的子类后，线程进入新建状态。调用了线程的start()方法后，线程进入就绪状态，虚拟机会将线程放入就绪队列中等待被调用。当线程被调用时，就会执行run()方法中的内容。
 public class MyThread extends </div>
       </a>
 
@@ -237,59 +236,15 @@ public class MyThread extends </div>
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/05/03/Java/Java-%E5%AD%97%E7%AC%A6%E4%B8%B2/index/">Java系列-字符串</a>
+      <a class="index-header" href="/2020/05/03/%E9%9D%A2%E7%BB%8F%E6%B1%87%E6%80%BB/index/">面试总结</a>
 
-      <a href="/2020/05/03/Java/Java-%E5%AD%97%E7%AC%A6%E4%B8%B2/index/" class="index-excerpt">
+      <a href="/2020/05/03/%E9%9D%A2%E7%BB%8F%E6%B1%87%E6%80%BB/index/" class="index-excerpt">
         
         
           
         
-        <div>总结一下自己学习String时碰到的知识点~
-Java中操作字符串可以使用String、StringBuilder、StringBuffer，这三个类
-1. String看一下Java中String类是什么样子的~
-public final class String
-    implements java.io.Serializable, Comparable&lt;String&gt;, Cha</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-05-03
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Java/">Java</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Java/">Java</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/05/02/Java/Java-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index/">Java系列-数据类型</a>
-
-      <a href="/2020/05/02/Java/Java-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index/" class="index-excerpt">
-        
-        
-          
-        
-        <div>因为之前面试碰到了~所以记录一下
-Java中基本数据类型都有哪些？分别占多少位？
+        <div>因为之前面试碰到了~所以总结下自己面试过程中碰到的各种题
+Java基础1. Java中基本数据类型都有哪些？分别占多少位？
 
 
 基本数据类型
@@ -329,7 +284,60 @@ boolean
 ~
 
 
-boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编</div>
+boolean 只有两个值：true、false，可以使用 1 bit 来存储</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-05-03
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9D%A2%E8%AF%95%E6%B1%87%E6%80%BB/">面试汇总</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9D%A2%E8%AF%95%E6%B1%87%E6%80%BB/">面试汇总</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/05/02/Java/Java-%E5%9F%BA%E7%A1%80/index/">Java系列-Java基础</a>
+
+      <a href="/2020/05/02/Java/Java-%E5%9F%BA%E7%A1%80/index/" class="index-excerpt">
+        
+        
+          
+        
+        <div>一、数据类型由于Java是一种强类型语言，意味着必须为每一个变量声明一种类型。在Java中一共有8种基本类型，其中有4种整型、2种浮点型、1种用于表示Unicode编码的字符的单元的字符类型char、1种用于表示真值的boolean。
+1. 整型整型用于表示没有效数部分的数值，允许为负数。Java提供了4种整型，具体如下表
+
+
+
+类型
+存储需求
+取值范围
+
+
+
+int
+4字节
+-2 147 483</div>
       </a>
 
       <div class="index-btm post-metas">
