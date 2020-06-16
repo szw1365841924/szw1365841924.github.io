@@ -19,7 +19,7 @@
   <meta name="description" content="">
   <meta name="author" content="Su ZhenWei">
   <meta name="keywords" content="">
-  <title>项目系列-B2C电商网站 - Szw&#39;s Blog</title>
+  <title>Redis-数据结构 - Szw&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
@@ -129,8 +129,8 @@
               
                 <div class="mt-3 post-meta">
                   <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-                  <time datetime="2020-05-23 18:53">
-                    星期六, 五月 23日 2020, 6:53 晚上
+                  <time datetime="2020-06-08 22:41">
+                    星期一, 六月 8日 2020, 10:41 晚上
                   </time>
                 </div>
               
@@ -140,7 +140,7 @@
                   
                   <span class="post-meta mr-2">
                     <i class="iconfont icon-chart"></i>
-                    926 字
+                    4 字
                   </span>
                 
 
@@ -150,7 +150,7 @@
                       <i class="iconfont icon-clock-fill"></i>
                     
                     
-                    9
+                    1
                      分钟
                   </span>
                 
@@ -179,62 +179,7 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h2 id="1、-项目介绍"><a href="#1、-项目介绍" class="headerlink" title="1、 项目介绍"></a>1、 项目介绍</h2><p>先来总结以下自己的开发路程吧，最初我是想做一个类似跳骚市场的在线网站给同学们用来进行一些二手用品的交易(因为学校有这个微信小程序，但是并没有这个网站，所以就想做一个这样的网站)。但是越开发，发现功能越多。。。导致到现在也没有完全开发完。又遇到了期末考，只能暂时搁置了，假期我会尽量把它补全。</p>
-<p><em>ps：还是没经验啊，哎，前端大哥都被熬跑了。不求能真正投入使用，但还是希望能在毕业之前给学校做点贡献。</em></p>
-<p>整个项目采用的是前后端分离式开发的：</p>
-<ul>
-<li><p>前端分为两部分：</p>
-<ul>
-<li>后台管理系统：主要面向的是后台管理员，采用基于Vue的单页应用开发方式</li>
-<li>前台系统：面向的是客户，前台采用的是Vue结合Nuxt实现服务端渲染方式</li>
-</ul>
-</li>
-<li><p><strong>后端—我负责</strong></p>
-<p>后端采用基于SpringCloud的微服务架构，统一对外提供Rest风格接口，无论是后台管理系统还是前台系统都共享这些微服务接口，而微服务中通过JWT方式来识别用户身份，开放不同接口。</p>
-</li>
-</ul>
-<h2 id="2、-系统架构图"><a href="#2、-系统架构图" class="headerlink" title="2、 系统架构图"></a>2、 系统架构图</h2><p>项目架构图如下所示，图是GitHub上扒的。因为是前后端分离式的，并且后端使用Spring Cloud微服务形式开发的，所以基本的核心微服务都是照着图上的微服务群中来做的。</p>
-<p><img src="/img/%E9%A1%B9%E7%9B%AE/B2C%E9%A1%B9%E7%9B%AE%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%9B%BE.png" srcset="/img/loading.gif" alt="B2C项目系统架构图"></p>
-<h2 id="3、-技术选型"><a href="#3、-技术选型" class="headerlink" title="3、 技术选型"></a>3、 技术选型</h2><p>后端技术：</p>
-<p><em>我认为比较难的技术，会在后面标出用途</em></p>
-<ul>
-<li>基础的SpringMVC、Spring和MyBatis</li>
-<li>Spring Boot</li>
-<li><strong>Spring Cloud：开发的核心，实现微服务开发。内置了Zuul网关、Eureka注册中心等重要部分。</strong></li>
-<li><strong>Redis：实现可靠缓存服务即热点数据保存。</strong></li>
-<li><strong>RabbitMQ：实现可靠消息服务，解决服务间通信问题。</strong></li>
-<li><strong>Elasticsearch：高级聚合功能，实现商品的智能过滤搜索。</strong></li>
-<li>Nginx</li>
-<li><strong>FastDFS：解决大数据量的分布式文件存储问题。</strong></li>
-<li>Thymeleaf</li>
-<li><strong>JWT：JWT技术及RSA非对称加密实现无状态的单点登录。</strong></li>
-</ul>
-<p>前端技术：</p>
-<ul>
-<li>基础的HTML、CSS、JavaScript（基于ES6标准）</li>
-<li>Vue.js 2.0以及基于Vue的UI框架：Vuetify</li>
-<li>前端构建工具：WebPack</li>
-<li>前端安装包工具：NPM</li>
-<li>Vue脚手架：Vue-cli</li>
-<li>Vue路由：vue-router</li>
-<li>ajax框架：axios</li>
-<li>基于Vue的富文本框架：quill-editor</li>
-</ul>
-<h2 id="4、-微服务群"><a href="#4、-微服务群" class="headerlink" title="4、 微服务群"></a>4、 微服务群</h2><p>因为我是负责后端开发嘛，所以总结下我实现的微服务，用”<strong><u>微服务</u></strong>“表示已开发，”微服务”表示未开发。</p>
-<ul>
-<li><strong><u>商品微服务</u></strong>：核心部分，对商品的增删改查都在此微服务内。</li>
-<li>订单微服务</li>
-<li>库存微服务</li>
-<li><strong><u>搜索微服务</u></strong>：难点之一，主要用Elasticsearch实现智能搜索过滤。</li>
-<li><strong><u>购物车微服务</u></strong>：难点之一，对购物车中的商品进行增删改查，并将用户添加到购物车中的商品存到redis中。</li>
-<li><strong><u>用户认证微服务</u></strong>：JWT+RSA非对称加密以实现用户鉴权、服务鉴权。</li>
-<li><strong><u>用户中心微服务</u></strong>：包含两部分，用户的登录和注册功能。</li>
-<li>支付微服务</li>
-<li><strong><u>短信微服务</u></strong>：用于用户注册时，发送验证码</li>
-<li>评论微服务</li>
-<li><strong><u>上传微服务</u></strong>：因为最初保存文件是保存到服务器，就会产生一些问题，比如单机器存储，存储能力有限、数据没有备份，有单点故障风险等等。了解到FastDFS后，采用FastDFS分布式文件系统存储文件。</li>
-</ul>
-
+              <h2 id="一、字符串"><a href="#一、字符串" class="headerlink" title="一、字符串"></a>一、字符串</h2>
             </article>
             <hr>
             <div>
@@ -243,7 +188,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a>
+                      <a class="hover-with-bg" href="/categories/Redis/">Redis</a>
                     
                   </div>
                 
@@ -251,7 +196,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E9%A1%B9%E7%9B%AE/">项目</a>
+                      <a class="hover-with-bg" href="/tags/Redis/">Redis</a>
                     
                   </div>
                 
@@ -264,18 +209,12 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/06/08/Redis/Redis-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Redis-数据结构</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/05/09/Java/Java-%E8%99%9A%E6%8B%9F%E6%9C%BA/index/">
-                        <span class="hidden-mobile">Java系列-虚拟机</span>
+                      <a href="/2020/05/23/%E9%A1%B9%E7%9B%AE/B2C%E7%94%B5%E5%95%86%E7%BD%91%E7%AB%99/index/">
+                        <span class="hidden-mobile">项目系列-B2C电商网站</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -393,7 +332,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "项目系列-B2C电商网站&nbsp;",
+        "Redis-数据结构&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
