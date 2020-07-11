@@ -180,7 +180,6 @@
             
             <article class="markdown-body">
               <p><em>本文大部分内容来自周志明-深入理解Java虚拟机，如想深入了解，请看原书</em></p>
-<p><a href="https://www.cnblogs.com/shen-qian/p/11277085.html" target="_blank" rel="noopener">https://www.cnblogs.com/shen-qian/p/11277085.html</a></p>
 <h3 id="一、运行时数据区域"><a href="#一、运行时数据区域" class="headerlink" title="一、运行时数据区域"></a>一、运行时数据区域</h3><p><img src="/img/Java/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F.png" srcset="/img/loading.gif" alt="运行时数据区域"></p>
 <h4 id="1-程序计数器"><a href="#1-程序计数器" class="headerlink" title="1. 程序计数器"></a>1. 程序计数器</h4><p>用来记录当前线程正在执行的虚拟机字节码指令的地址，如果当前线程执行是本地方法栈则程序计数器为空。</p>
 <p>由于Java虚拟机的多线程是通过线程轮流切换并分配处理器执行时间来实现的，所以为了线程切换之后能恢复到原来的执行位置，每个线程必须有自己独立的程序计数器。</p>
@@ -276,21 +275,19 @@ obj = <span class="hljs-keyword">null</span>;</code></pre>
 <li>如果对象在进行可达性分析后发现没有与GC Roots相连接的引用链，那它将会被第一次标记并且进行一次筛选。筛选的条件：此对象是否有必要执行 finalize() 方法。当对象没有覆盖 finalize() 方法，或者 finalize() 方法已经被虚拟机调用过，虚拟机将这两种情况都视为“没有必要执行”。如果这个对象被判定为有必要执行finalize()方法，那么这个对象将会放置在一个叫做F-Queue的队列之中，并在稍后由一个由虚拟机自动建立的、低优先级的 Finalizer 线程去执行它，但并会等待它运行结束。</li>
 <li>稍后 GC 将会对F-Queue进行第二次小规模标记，如果对象在 finalize() 方法中重新与引用链上的任意一个对象建立了关联，那么在第二次标记中它将被移除即将回收的集合。否则这个对象就会被真正的回收。</li>
 </ol>
-<h4 id="4-垃圾收集算法"><a href="#4-垃圾收集算法" class="headerlink" title="4. 垃圾收集算法"></a>4. 垃圾收集算法</h4><p><em>以下图片来源：<a href="https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E8%99%9A%E6%8B%9F%E6%9C%BA.md" target="_blank" rel="noopener">https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E8%99%9A%E6%8B%9F%E6%9C%BA.md</a></em></p>
-<ol>
-<li>标记—清除算法</li>
-</ol>
-<p>   <img src="/img/Java/%E6%A0%87%E8%AE%B0%E2%80%94%E6%B8%85%E9%99%A4.png" srcset="/img/loading.gif" alt="标记—清除"></p>
-<p>   算法分为“<strong>标记</strong>”和“<strong>清除</strong>”两个阶段：</p>
+<h4 id="4-垃圾收集算法"><a href="#4-垃圾收集算法" class="headerlink" title="4. 垃圾收集算法"></a>4. 垃圾收集算法</h4><ol>
+<li><p>标记—清除算法</p>
+<p><img src="/img/Java/%E6%A0%87%E8%AE%B0%E2%80%94%E6%B8%85%E9%99%A4.png" srcset="/img/loading.gif" alt="标记—清除"></p>
+<p>算法分为“<strong>标记</strong>”和“<strong>清除</strong>”两个阶段：</p>
 <ul>
 <li><p>标记过程：首先检查每个对象是否为存活对象，如果是存活对象，则会在对象头部打上标记。</p>
 <p><em>标记过程与上一节所说的相同，会有两次标记</em></p>
 </li>
 <li><p>清除阶段：会进行对象回收并取消标志位。同时，还会判断回收后的分块与前一个空闲分块是否连续，若连续，会合并这两个分块。回收对象就是把对象作为分块，连接到被称为 “空闲链表” 的单向链表，之后进行分配时只需要遍历这个空闲链表，就可以找到分块。</p>
-<p>在分配时，程序会搜索空闲链表寻找空间大于等于新对象大小 size 的块 block。如果它找到的块等于<br>size，会直接返回这个分块；如果找到的块大于 size，会将块分割成大小为 size 与 (block - size) 的两部分，返回大小为 size 的分块，并把大小为 (block - size) 的块返回给空闲链表。</p>
-<p>缺点：</p>
 </li>
 </ul>
+<p>在分配时，程序会搜索空闲链表寻找空间大于等于新对象大小 size 的块 block。如果它找到的块等于<br>size，会直接返回这个分块；如果找到的块大于 size，会将块分割成大小为 size 与 (block - size) 的两部分，返回大小为 size 的分块，并把大小为 (block - size) 的块返回给空闲链表。</p>
+<p>缺点：</p>
 <ol>
 <li><p>效率问题：标记和清除两个过程的效率都不高</p>
 </li>
@@ -298,7 +295,7 @@ obj = <span class="hljs-keyword">null</span>;</code></pre>
 <p><em>空间碎片太多可能会导致以后在程序运行过程中需要分配较大对象时，无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作</em></p>
 </li>
 </ol>
-<ol start="2">
+</li>
 <li><p>标记—整理算法</p>
 <p><img src="/img/Java/%E6%A0%87%E8%AE%B0%E2%80%94%E6%95%B4%E7%90%86.png" srcset="/img/loading.gif" alt="标记—整理"></p>
 <p><strong>根据老年代的特点</strong>，提出了标记—整理算法</p>
@@ -529,7 +526,7 @@ obj = <span class="hljs-keyword">null</span>;</code></pre>
 
 <ol start="4">
 <li><p>动态对象年龄判定</p>
-<p>虚拟机并不是永远要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor<br>中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无需等到 MaxTenuringThreshold 中要求的年龄。</p>
+<p>虚拟机并不是永远要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无需等到 MaxTenuringThreshold 中要求的年龄。</p>
 </li>
 <li><p>空间分配担保</p>
 <p>在发生 Minor GC 之前，虚拟机先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，如果条件成立的话，那么 Minor GC 可以确认是安全的。</p>
@@ -674,12 +671,12 @@ obj = <span class="hljs-keyword">null</span>;</code></pre>
 <li><p><strong>初始化</strong></p>
 <p>初始化阶段的目的是：</p>
 <ol>
-<li><strong>真正开始执行类中定义的 Java 程序代码。初始化阶段是执行类构造器 <clinit>() 方法的过程。</strong></li>
+<li><strong>真正开始执行类中定义的 Java 程序代码。初始化阶段是执行类构造器&lt; clinit &gt;() 方法的过程。</strong></li>
 </ol>
 <p>在准备阶段，类变量已经赋过一次系统要求的初始值，而在初始化阶段，根据程序员通过程序制定的主观计划去初始化类变量和其它资源。 </p>
-<p><clinit>() 方法在执行中的一些细节：</p>
+<p>&lt; clinit &gt;() 方法在执行中的一些细节：</p>
 <ul>
-<li><p><clinit>() 方法是由编译器自动收集类中所有类变量的赋值动作和静态语句块中的语句合并产生的，编译器收集的顺序由语句在源文件中出现的顺序决定。静态语句块只能访问到定义在它之前的类变量，定义在它之后的类变量只能赋值，不能访问。</p>
+<li><p>&lt; clinit &gt;() 方法是由编译器自动收集类中所有类变量的赋值动作和静态语句块中的语句合并产生的，编译器收集的顺序由语句在源文件中出现的顺序决定。静态语句块只能访问到定义在它之前的类变量，定义在它之后的类变量只能赋值，不能访问。</p>
 <p>如：</p>
 <pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;
     <span class="hljs-keyword">static</span> &#123;
@@ -691,7 +688,7 @@ obj = <span class="hljs-keyword">null</span>;</code></pre>
     <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>;
 &#125;</code></pre>
 </li>
-<li><p>父类的 <clinit>() 方法先执行，那么父类中定义的静态语句块的执行肯定要优先于子类。</p>
+<li><p>父类的 &lt; clinit &gt;() 方法先执行，那么父类中定义的静态语句块的执行肯定要优先于子类。</p>
 <p>如：</p>
 <pre><code class="hljs Java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Parent</span> </span>&#123;
     <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> A = <span class="hljs-number">1</span>;
@@ -709,11 +706,11 @@ obj = <span class="hljs-keyword">null</span>;</code></pre>
     System.out.println(Sub.B);  
 &#125;</code></pre>
 </li>
-<li><p><clinit>()  方法对于类或接口来说并不是必须的，如果一个类中没有静态语句块，也没有对变量进行赋值操作，那么编译器可以不为这个类生成<clinit>()  方法。</p>
+<li><p>&lt; clinit &gt;()  方法对于类或接口来说并不是必须的，如果一个类中没有静态语句块，也没有对变量进行赋值操作，那么编译器可以不为这个类生成&lt; clinit &gt;()  方法。</p>
 </li>
-<li><p>接口中不可以使用静态语句块，但仍然有类变量初始化的赋值操作，因此接口与类一样都会生成 <clinit>()  方法。但接口与类不同的是，执行接口的 <clinit>() 方法不需要先执行父接口的 <clinit>()  方法。只有当父接口中定义的变量使用时，父接口才会初始化。另外，接口的实现类在初始化时也一样不会执行接口的 <clinit>()  方法。</p>
+<li><p>接口中不可以使用静态语句块，但仍然有类变量初始化的赋值操作，因此接口与类一样都会生成 &lt; clinit &gt;()  方法。但接口与类不同的是，执行接口的 &lt; clinit &gt;() 方法不需要先执行父接口的 &lt; clinit &gt;()  方法。只有当父接口中定义的变量使用时，父接口才会初始化。另外，接口的实现类在初始化时也一样不会执行接口的 &lt; clinit &gt;()  方法。</p>
 </li>
-<li><p>虚拟机会保证一个类的 <clinit>()  方法在多线程环境下被正确的加锁和同步，如果多个线程同时初始化一个类，只会有一个线程执行这个类的 <clinit>()  方法，其它线程都会阻塞等待，直到活动线程执行 <clinit>() 方法完毕。如果在一个类的 <clinit>()  方法中有耗时的操作，就可能造成多个线程阻塞，在实际过程中此种阻塞很隐蔽。</p>
+<li><p>虚拟机会保证一个类的 &lt; clinit &gt;()  方法在多线程环境下被正确的加锁和同步，如果多个线程同时初始化一个类，只会有一个线程执行这个类的 &lt; clinit &gt;()  方法，其它线程都会阻塞等待，直到活动线程执行 &lt; clinit &gt;() 方法完毕。如果在一个类的 &lt; clinit &gt;()  方法中有耗时的操作，就可能造成多个线程阻塞，在实际过程中此种阻塞很隐蔽。</p>
 </li>
 </ul>
 </li>
