@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/%E7%AC%94%E8%AE%B0.png">
+  <link rel="icon" type="image/png" href="/img/%E7%AC%94%E8%AE%B0.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2e294e">
+  <meta name="description" content="">
+  <meta name="author" content="Su ZhenWei">
+  <meta name="keywords" content="">
+  <title>常用框架-Spring - Szw&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.18.1/styles/github-gist.min.css" />
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_ijqayz9ro8k.css">
+
+
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Szw's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              首页</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              归档</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              分类</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">
+              <i class="iconfont icon-tags-fill"></i>
+              标签</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              关于</a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/%E6%96%87%E7%AB%A0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <div class="mt-3 post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2020-07-13 10:55">
+                    星期一, 七月 13日 2020, 10:55 上午
+                  </time>
+                </div>
+              
+
+              <div class="mt-1">
+                
+                  
+                  <span class="post-meta mr-2">
+                    <i class="iconfont icon-chart"></i>
+                    5k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta mr-2">
+                      <i class="iconfont icon-clock-fill"></i>
+                    
+                    
+                    61
+                     分钟
+                  </span>
+                
+
+                
+              </div>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <h2 id="一、Spring介绍"><a href="#一、Spring介绍" class="headerlink" title="一、Spring介绍"></a>一、Spring介绍</h2><h3 id="1-为什么要使用Spring？"><a href="#1-为什么要使用Spring？" class="headerlink" title="1. 为什么要使用Spring？"></a>1. 为什么要使用Spring？</h3><p>首先，Spring的诞生就是为了替代以前重量级的企业级Java技术。</p>
+<p>它实现了：</p>
+<ol>
+<li><p>通过依赖注入和面向接口实现<strong>松耦合</strong></p>
+<p>从松耦合方面来看，我们以前实现松耦合都是通过工厂模式来实现的。</p>
+<p>而Spring给我们提供了更加合适的方法：<strong>IOC控制反转</strong>来实现松耦合，使其更加灵活、功能更加强大。</p>
+</li>
+<li><p>基于<strong>切面编程</strong>减少重复代码</p>
+<p>从切面编程方面来看，动态代理就属于一种切面编程。Spring给我们提供了一种更好的方式来：<strong>AOP</strong>来实现切面编程。</p>
+</li>
+</ol>
+<h3 id="2-使用Spring能解决什么问题？"><a href="#2-使用Spring能解决什么问题？" class="headerlink" title="2. 使用Spring能解决什么问题？"></a>2. 使用Spring能解决什么问题？</h3><p>先考虑以前我们没有Spring时，我们开发Web项目是怎么做的。</p>
+<p>用户访问—-&gt;Tomcat—-&gt;servlet—-&gt;service—-&gt;dao</p>
+<p>这样会带来几个问题：</p>
+<ol>
+<li>对象的创建能否写死？</li>
+<li>对象的依赖关系怎么解决？</li>
+<li>对象创建其他问题，比如是否单例，什么时候创建等等？</li>
+</ol>
+<p>问题1和问题2可以通过工厂模式解决，但是方法相对来说比较麻烦，而问题2就不太好解决了。</p>
+<p>但是通过Spring框架中的IOC就可以很好的解决上面的问题。</p>
+<h2 id="二、Spring"><a href="#二、Spring" class="headerlink" title="二、Spring"></a>二、Spring</h2><h3 id="1-Spring模块"><a href="#1-Spring模块" class="headerlink" title="1. Spring模块"></a>1. Spring模块</h3><p><img src="/img/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/Spring/Spring%E6%A8%A1%E5%9D%97.png" srcset="/img/loading.gif" alt="Spring模块"></p>
+<p>Spring可以分为以上几个模块：</p>
+<ul>
+<li>Spring Core：Spring的核心功能，提供IOC容器，用来解决对象创建以及依赖关系</li>
+<li>Spring Web：Spring对web模块的支持</li>
+<li>Spring DAO：Spring对jdbc操作的支持 ，提供了JdbcTemplate模板工具类</li>
+<li>Spring ORM：Spring对orm框架的支持</li>
+<li>Spring AOP：Spring对切面编程的支持</li>
+</ul>
+<p>在这次的学习总结中，主要是Core模块和AOP模块。</p>
+<h3 id="2-Spring-Core模块"><a href="#2-Spring-Core模块" class="headerlink" title="2. Spring Core模块"></a>2. Spring Core模块</h3><p>在搭建开发环境时，除了在pom.xml中引入依赖。还需要编写一个Spring的核心配置文件：<code>application.xml</code></p>
+<p>这个配置文件用来配置Bean对象以及一些配置信息。</p>
+<h4 id="2-1-什么是IOC？"><a href="#2-1-什么是IOC？" class="headerlink" title="2.1 什么是IOC？"></a>2.1 什么是IOC？</h4><p>IOC容器用来解决对象创建和对象之间的依赖关系。</p>
+<p>Spring容器分为两种类型：</p>
+<ul>
+<li><p><strong>BeanFactory</strong>：Bean工厂，功能简单的容器；它在启动的时候不会去实例化Bean，当需要从容器中拿Bean对象的时候才会去实例化；</p>
+<pre><code class="hljs Java"><span class="hljs-comment">//加载Spring的资源文件</span>
+Resource resource = <span class="hljs-keyword">new</span> ClassPathResource(<span class="hljs-string">"applicationContext.xml"</span>);
+
+<span class="hljs-comment">//创建IOC容器对象</span>
+BeanFactory beanFactory = <span class="hljs-keyword">new</span> XmlBeanFactory(resource);</code></pre>
+</li>
+<li><p><strong>ApplicationContext</strong>：应用上下文，功能更为强大的容器；它在启动的时候就把所有的Bean全部实例化，它还可以为Bean配置懒加载来让Bean延迟实例化；</p>
+<pre><code class="hljs Java"><span class="hljs-comment">// 得到IOC容器对象</span>
+ApplicationContext ac = <span class="hljs-keyword">new</span> ClassPathXmlApplicationContext(<span class="hljs-string">"applicationContext.xml"</span>);</code></pre>
+
+</li>
+</ul>
+<h4 id="2-2-IOC容器装配Bean的3种方式"><a href="#2-2-IOC容器装配Bean的3种方式" class="headerlink" title="2.2 IOC容器装配Bean的3种方式"></a>2.2 IOC容器装配Bean的3种方式</h4><p>在上面无论是用BeanFactory还是ApplicationContext，都已经拿到了IOC容器。接下来就是通过IOC获得Bean对象。在这里为了便于理解，我创建一个Student类。</p>
+<pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span></span>&#123;
+    <span class="hljs-keyword">private</span> String name;
+    <span class="hljs-keyword">private</span> String id;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">return</span> name;
+    &#125;
+    
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.name = name;
+    &#125;
+    
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getId</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">return</span> id;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setId</span><span class="hljs-params">(String id)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.id = id;
+    &#125;
+&#125;</code></pre>
+
+<ol>
+<li><p><strong>xml配置</strong></p>
+<p>传统形式是在application.xml中配置bean对象：</p>
+<pre><code class="hljs xml"><span class="hljs-comment">&lt;!--</span>
+<span class="hljs-comment">	使用bean标签来配置对象</span>
+<span class="hljs-comment">		bean中的属性：</span>
+<span class="hljs-comment">			id属性标识唯一的对象</span>
+<span class="hljs-comment">			class属性表示要创建的对象的全路径名</span>
+<span class="hljs-comment">--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"student"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"Bean的全路径名"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+
+<p>配置好之后我们就可以在IOC中获取对象了</p>
+<pre><code class="hljs Java">ApplicationContext ac = <span class="hljs-keyword">new</span> ClassPathXmlApplicationContext(<span class="hljs-string">"applicationContext.xml"</span>);
+
+Student student = (Student) ac.getBean(<span class="hljs-string">"student"</span>);
+
+student.setName(<span class="hljs-string">"张三"</span>);
+System.out.println(student.getName());</code></pre>
+</li>
+<li><p><strong>注解</strong></p>
+<p>通过注解可以简化IOC容器的配置，注解可以把对象添加到IOC容器中、处理对象依赖关系</p>
+<p>创建Bean对象的一些相关注解：</p>
+<ul>
+<li>@Component：把一个对象加入IOC容器</li>
+<li>@Repository：作用与@Component相同，但是此注解在持久层使用</li>
+<li>@Service：作用与@Component相同，但是此注解在业务逻辑层使用</li>
+<li>@Controller：作用与@Component相同，但是此注解在控制层使用 </li>
+</ul>
+<p>把以上常用注解扫描进IOC容器的方法有以下两种：</p>
+<ul>
+<li><p>在application.xml中配置—&gt;常用这种方式来扫描注解：</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">"要扫描的包路径"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">context:component-scan</span>&gt;</span></code></pre>
+</li>
+<li><p>使用自定义扫描类来扫描注解：</p>
+<pre><code class="hljs Java"><span class="hljs-comment">// @ComponentScan注解的含义是扫描器，扫描的路径是在内部添加的包路径</span>
+<span class="hljs-meta">@ComponentScan</span>(<span class="hljs-string">"要扫描的包路径"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ScanSettings</span></span>&#123;
+    
+&#125;</code></pre>
+
+<p>注意在使用自定义扫描类来测试的时候不能用<code>ClassPathXmlApplicationContext</code>来获取应用上下文，而应该用<code>AnnotationConfigApplicationContext</code>来获取应用上下文呢。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>JavaConfig</strong></p>
+<p>通过Java代码来配置Bean对象。</p>
+<p>使用JavaConfig的方法：</p>
+<ul>
+<li><p>创建一个Java类，使用@Configuration修饰该类，我们上一个例子也说了，被@Configuration修饰的类就是配置类</p>
+</li>
+<li><p>使用@Bean注解来修饰方法，该方法返回一个对象，Spring会将该对象加入到IOC容器中，容器中的Bean的ID默认为方法名</p>
+<pre><code class="hljs java"><span class="hljs-comment">// @Configuration标志这是一个配置类</span>
+<span class="hljs-meta">@Configuration</span>
+<span class="hljs-comment">// 可以通过@ImportResource注解来引入我们写好的xml文件</span>
+<span class="hljs-meta">@ImportResource</span>(<span class="hljs-string">"classpath:application.xml"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Configuration</span></span>&#123;
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Student <span class="hljs-title">getStudent</span><span class="hljs-params">()</span></span>&#123;
+        Student stu = <span class="hljs-keyword">new</span> Student();
+        stu.setName(<span class="hljs-string">"张三"</span>);
+        stu.setId(<span class="hljs-string">"10086"</span>);
+        <span class="hljs-keyword">return</span> stu;
+    &#125;
+&#125;</code></pre>
+</li>
+</ul>
+</li>
+<li><p>总结</p>
+<p>这三种方式可以混合使用，我们一般都是使用<strong>xml+注解</strong>的方式来配置。</p>
+</li>
+</ol>
+<h4 id="2-3-解决Bean的依赖注入的3种方式"><a href="#2-3-解决Bean的依赖注入的3种方式" class="headerlink" title="2.3 解决Bean的依赖注入的3种方式"></a>2.3 解决Bean的依赖注入的3种方式</h4><p>我们解决对象依赖，最初是直接new的方式。然后为了解决高度耦合，我们选择了工厂方法模式，但是仍然很麻烦。其实换一种角度理解对象依赖的话，它就是指当前对象中的属性存在其他对象的变量，我们要给这个变量赋值。Spring给我们提供了以下几种方法来解决对象依赖。</p>
+<ol>
+<li><p><strong>构造方法</strong></p>
+<ul>
+<li><p>无参构造方法</p>
+<p>如果不需要设置Bean中的属性，就直接在application.xml中配置bean标签即可。</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"Bean的id值"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"Bean的全路径名"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+</li>
+<li><p>带参构造方法</p>
+<p>如果需要设置Bean中的属性，可以在bean标签中使用constructor-arg标签来配置。</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"Bean的id值"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"Bean的全路径名"</span>&gt;</span>
+    <span class="hljs-comment">&lt;!--</span>
+<span class="hljs-comment">		constructor-arg这个标签来设置构造方法中的参数值</span>
+<span class="hljs-comment">	--&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">index</span>=<span class="hljs-string">"该参数在构造方法中位于第几个"</span></span>
+<span class="hljs-tag">                     <span class="hljs-attr">name</span>=<span class="hljs-string">"该参数在构造方法中的名称"</span></span>
+<span class="hljs-tag">                     <span class="hljs-attr">type</span>=<span class="hljs-string">"该参数的类型"</span> </span>
+<span class="hljs-tag">                     <span class="hljs-attr">value</span>=<span class="hljs-string">"如果该参数是基本类型，可以直接用value赋值"</span> </span>
+<span class="hljs-tag">                     <span class="hljs-attr">ref</span>=<span class="hljs-string">"如果该参数是一个引用类型，可以用ref来引用"</span>&gt;</span>
+        <span class="hljs-comment">&lt;!--</span>
+<span class="hljs-comment">			如果参数是集合，可以使用list标签</span>
+<span class="hljs-comment">		--&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">list</span>&gt;</span>
+            <span class="hljs-comment">&lt;!--引用类型--&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">ref</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ref</span>&gt;</span>
+            <span class="hljs-comment">&lt;!--基本类型--&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">list</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">constructor-arg</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+
+
+
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>工厂模式：<em>这是后来了解到的，可以通过工厂模式来配置bean对象</em></p>
+<ul>
+<li><p>工厂静态方法</p>
+<p>首先，工厂的形式如下：</p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Factory</span></span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Student <span class="hljs-title">getStudent</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Student();
+    &#125;
+&#125;</code></pre>
+
+<p>在application.xml中是这么配置的</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> </span>
+<span class="hljs-tag">      <span class="hljs-attr">id</span>=<span class="hljs-string">"Bean的id值"</span> </span>
+<span class="hljs-tag">      <span class="hljs-attr">class</span>=<span class="hljs-string">"工厂的全路径名"</span> </span>
+<span class="hljs-tag">      <span class="hljs-attr">factory-method</span>=<span class="hljs-string">"指向工厂中创建对象的静态方法，这里就是getStudent()"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+</li>
+<li><p>工厂实例方法</p>
+<pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Factory</span></span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Student <span class="hljs-title">getStudent</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Student();
+    &#125;
+&#125;</code></pre>
+
+<p>如果是实例方法，那么在application.xml中需要先配置下工厂的bean对象</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"工厂Bean的id值"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"工厂的全路径名"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span>  </span>
+<span class="hljs-tag">      <span class="hljs-attr">id</span>=<span class="hljs-string">"Bean的id值"</span> </span>
+<span class="hljs-tag">      <span class="hljs-attr">factory-bean</span>=<span class="hljs-string">"工厂Bean的id"</span></span>
+<span class="hljs-tag">      <span class="hljs-attr">factory-method</span>=<span class="hljs-string">"指向工厂中创建对象的实例方法，这里就是getStudent()"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+
+</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p><strong>set方法</strong></p>
+<p>除了构造方法，我们还可以通过set方法来注入属性。</p>
+<p>使用set方法在application.xml中使用property标签来配置：</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"Bean的id值"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"Bean的全路径名"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"属性名称"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"给基本类型赋值"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"给引用类型赋值"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+
+<p>在上面配置引用类型ref时，是先配置好ref中的对象，然后在ref中引用。<br>如果想实现先配置外部的bean，在配置ref中的bean，可以这么做。</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"Bean的id值"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"Bean的全路径名"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"属性名称"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"内部Bean的id值"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"内部Bean的全路径名"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+</li>
+<li><p><strong>注解</strong></p>
+<p>使用注解的方式更加简便，一般我在使用的时候都是通过注解来实现的。</p>
+<ul>
+<li><p>@Autowired注解，由Spring提供，默认按类型来装配。它要求依赖对象必须存在，如果允许null值，可以设置它required属性为false。</p>
+<pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudentService</span></span>&#123;
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> StudentDao dao;
+    
+    <span class="hljs-comment">//....</span>
+&#125;</code></pre>
+</li>
+<li><p>@Resource注解，由JDK提供，默认按名称装配。它可以指定一个name属性，如果没有指定name属性，默认取字段的名称作为bean的id值；如果指定了name属性，则按指定的name来寻找bean。</p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudentService</span></span>&#123;
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> StudentDao dao;
+    
+    <span class="hljs-comment">//....</span>
+&#125;</code></pre>
+
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="2-4-Bean对象创建的细节"><a href="#2-4-Bean对象创建的细节" class="headerlink" title="2.4 Bean对象创建的细节"></a>2.4 Bean对象创建的细节</h4><p>在bean标签中还有一些属性比较重要：</p>
+<ol>
+<li><p>Scope属性：通过这个属性可以指定对象是单例(singleton，默认是这个)还是多例(prototype)。</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"Bean的id值"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"Bean的全路径名"</span> <span class="hljs-attr">scope</span>=<span class="hljs-string">"指定单例或多例"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+
+<p>使用单例(singleton)的时候，从IOC容器获取的对象都是同一个，且对象在IOC容器创建之前就已经创建了；</p>
+<p>使用多例(prototype)的时候，从IOC容器获取的对象都是不同的，且在使用的时候才会创建；</p>
+</li>
+<li><p>lazy-init属性：这个属性只对单例(singleton)对象有效，默认为false。这个属性可以实现懒加载，如果想要对象在使用的时候才创建，那么可以将lazy-init设置为ture。</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"Bean的id值"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"Bean的全路径名"</span> <span class="hljs-attr">lazy-init</span>=<span class="hljs-string">"true或false"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+</li>
+<li><p>init-method属性：这个属性表示对象在创建之后，执行某个方法。</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"Bean的id值"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"Bean的全路径名"</span> <span class="hljs-attr">init-method</span>=<span class="hljs-string">"在Bean中写好的方法"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+</li>
+<li><p>destroy-method属性：这个属性表示IOC容器销毁之后，执行某个方法。</p>
+<pre><code class="hljs XML"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"Bean的id值"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"Bean的全路径名"</span> <span class="hljs-attr">destroy-method</span>=<span class="hljs-string">"在Bean中写好的方法"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+
+</li>
+</ol>
+<h3 id="3-Spring-AOP模块"><a href="#3-Spring-AOP模块" class="headerlink" title="3. Spring AOP模块"></a>3. Spring AOP模块</h3><h4 id="3-1-什么是AOP？"><a href="#3-1-什么是AOP？" class="headerlink" title="3.1 什么是AOP？"></a>3.1 什么是AOP？</h4><p>Aop(aspect object programming)面向切面编程，它的功能就是可以让多个类中重复代码与业务代码分离，对很多类都有的重复代码进行抽取，然后在运行的时候往业务方法上动态植入这些重复的代码。</p>
+<p>AOP的底层实现是通过JDK动态代理和CGLib代理来完成的。</p>
+<p><em>JDK动态代理和CGLib代理的区别：JDK动态代理是需要实现某个接口，而我们类不一定全部都有接口，于是就有了CGLib代理。JDK动态代理之所以实现某个接口是因为它在代理的时候会创建一个代理类，这个代理类会继承Proxy，Java不能同时继承两个类，所以我们想要和被代理类建立联系只能通过接口。就是说代理类和被代理类是同级关系；CGLib是通过对指定的代理类生成一个子类，并覆盖其中方法实现增强。在这种模式下被代理类和代理类是继承关系。</em></p>
+<h4 id="3-2-AOP使用的2种方式"><a href="#3-2-AOP使用的2种方式" class="headerlink" title="3.2 AOP使用的2种方式"></a>3.2 AOP使用的2种方式</h4><ol>
+<li><p><strong>注解</strong></p>
+<p>首先如果想使用注解必须在bean.xml中开启注解扫描，然后在打开AOP注解方式即可</p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">"要扫描的包路径"</span> /&gt;</span>
+<span class="hljs-comment">&lt;!--开启AOP注解--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">aop:aspectj-autoproxy</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">aop:aspectj-autoproxy</span>&gt;</span></code></pre>
+
+<p>然后我们就可以在代码中使用AOP的注解了。</p>
+<p>指定一个切面类，然后被切入的类中的方法在执行的时候，就会执行这些切入的方法。这里如果被切入的类没有实现接口，底层就使用CGLib代理；如果有实现接口，底层就使用JDK代理。</p>
+<pre><code class="hljs java"><span class="hljs-meta">@Component</span>
+<span class="hljs-comment">// @Aspect：指定该类为切面类</span>
+<span class="hljs-meta">@Aspect</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyAOP</span></span>&#123;
+    <span class="hljs-comment">// @Pointcut: 指定切入点表达式，表示要拦截哪个类的哪些方法</span>
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">    	<span class="hljs-doctag">@Pointcut</span>的具体写法: 主要部分有以下几点</span>
+<span class="hljs-comment">    	execution(方法修饰符(可以不写) 方法返回值类型 方法路径.方法名(方法的参数))</span>
+<span class="hljs-comment">    	其中有一些特殊符号: ?号代表0或1，可以不写</span>
+<span class="hljs-comment">    					 “*”号代表任意类型，0或多个</span>
+<span class="hljs-comment">    					 方法参数为..表示为可变参数</span>
+<span class="hljs-comment">    	举个例子: execution(* MySpring.*.*(..)) —&gt; 代表的含义就是任意返回值类型，在MySpring包												 下的所有类的所有方法，参数是任意的参数。</span>
+<span class="hljs-comment">    **/</span>
+    <span class="hljs-meta">@Pointcut</span>(<span class="hljs-string">"execution(* MySpring.*.*(..))"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pt</span><span class="hljs-params">()</span> </span>&#123;
+    &#125;
+    
+    <span class="hljs-comment">// 前置通知: 在执行目标方法之前执行</span>
+    <span class="hljs-meta">@Before</span>(<span class="hljs-string">"pt()"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">before</span><span class="hljs-params">()</span> </span>&#123;
+		<span class="hljs-comment">// ....</span>
+    &#125;
+	
+    <span class="hljs-comment">// 后置通知: 在执行目标方法之后执行，无论是否出现异常都会执行</span>
+    <span class="hljs-meta">@After</span>(<span class="hljs-string">"pt()"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">after</span><span class="hljs-params">()</span> </span>&#123;
+		<span class="hljs-comment">// ....</span>
+    &#125;
+    
+	<span class="hljs-comment">// 返回后通知: 在调用目标方法结束后执行，出现异常则不执行</span>
+    <span class="hljs-meta">@AfterReturning</span>(<span class="hljs-string">"pt()"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterReturning</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-comment">// ....</span>
+    &#125;
+    
+    <span class="hljs-comment">// 异常通知: 当目标方法执行发生异常时候执行此方法</span>
+    <span class="hljs-meta">@AfterThrowing</span>(<span class="hljs-string">"pt()"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowing</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-comment">// ....</span>
+    &#125;
+    
+    <span class="hljs-comment">// 环绕通知: 环绕目标方式执行</span>
+    <span class="hljs-meta">@Around</span>(<span class="hljs-string">"pt()"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">around</span><span class="hljs-params">(ProceedingJoinPoint pjp)</span> <span class="hljs-keyword">throws</span> Throwable</span>&#123;
+        System.out.println(<span class="hljs-string">"开始执行"</span>);
+        <span class="hljs-comment">// 执行目标方法</span>
+        pjp.proceed();
+        System.out.println(<span class="hljs-string">"执行结束"</span>);
+    &#125;
+&#125;</code></pre>
+</li>
+<li><p><strong>xml配置</strong></p>
+<p>使用xml配置的方式如下操作</p>
+<pre><code class="hljs xml"><span class="hljs-comment">&lt;!--切面类--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"aop"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"MySpring.MyAOP"</span>/&gt;</span>
+<span class="hljs-comment">&lt;!--AOP配置--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">aop:config</span> &gt;</span>
+    <span class="hljs-comment">&lt;!--定义切入表达式，拦截哪些方法--&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"pt"</span> <span class="hljs-attr">expression</span>=<span class="hljs-string">"execution(* MySpring.*.*(..))"</span>/&gt;</span>
+    <span class="hljs-comment">&lt;!--指定切面类是哪个--&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">aop:aspect</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"aop"</span>&gt;</span>
+        <span class="hljs-comment">&lt;!--指定来拦截的时候执行切面类的哪些方法--&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">aop:before</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"before"</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">"pt"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">aop:after</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"after"</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">"pt"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">aop:aspect</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">aop:config</span>&gt;</span></code></pre>
+
+</li>
+</ol>
+<h3 id="4-Spring-JDBC模块"><a href="#4-Spring-JDBC模块" class="headerlink" title="4. Spring JDBC模块"></a>4. Spring JDBC模块</h3><h4 id="4-1-使用Spring提供的JDBC"><a href="#4-1-使用Spring提供的JDBC" class="headerlink" title="4.1 使用Spring提供的JDBC"></a>4.1 使用Spring提供的JDBC</h4><p>Spring提供了一个JdbcTemplate这样一个类供我们使用。</p>
+<p>在xml中的配置如下</p>
+<pre><code class="hljs xml"><span class="hljs-comment">&lt;!--开启注解扫描--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">"要扫描的包路径"</span>/&gt;</span>
+
+<span class="hljs-comment">&lt;!--配置dataSource，这里使用c3p0连接池--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"dataSource"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.mchange.v2.c3p0.ComboPooledDataSource"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"driverClass"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"com.mysql.jdbc.Driver"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"jdbcUrl"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"jdbc:mysql:///zhongfucheng"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"user"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"root"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"root"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--创建JdbcTemplate对象--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"jdbcTemplate"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jdbc.core.JdbcTemplate"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"dataSource"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"dataSource"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+
+<p>配置好之后就可以在类中使用这个JdbcTemplate模板类了。</p>
+<p><em>因为现在基本都是使用持久层框架来操作数据库，所以我认为这个Spring提供的JdbcTemplate操作不是很重要。我也只是在学习Spring的时候遇到过，之后就没有使用过了。</em></p>
+<h4 id="4-2-事务控制"><a href="#4-2-事务控制" class="headerlink" title="4.2 事务控制"></a>4.2 事务控制</h4><p>事务控制分为以下两种：</p>
+<ol>
+<li><p><strong>编程式事务控制</strong></p>
+<p>手动控制事务，就叫做编程式事务控制。</p>
+<p>好处在于可以对指定的方法、指定的方法的某几行添加事务控制，比较灵活。但开发起来比较繁琐，每次都要开启、提交、回滚。</p>
+<p><em>这种方式我平时没有使用过，我一般都是使用声明式事务控制。</em></p>
+</li>
+<li><p><strong>声明式事务控制</strong></p>
+<p>Spring提供了对事务控制的就属于声明式事务控制，如果想要使用事务控制，只需要配置就行了。</p>
+<p>Spring中的事务控制是基于AOP来实现的。</p>
+<p>Spring提供的事务管理器类分为两种：</p>
+<ul>
+<li>Jdbc：DataSourceTransactionManager</li>
+<li>Hibernate：HibernateTransactionManager</li>
+</ul>
+<ol>
+<li><p><strong>XML配置</strong></p>
+<p>使用xml方式的配置如下，这里我配置的是JDBC的事务管理</p>
+<pre><code class="hljs xml"><span class="hljs-comment">&lt;!--开启注解扫描--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">"要扫描的包路径"</span>/&gt;</span>
+
+<span class="hljs-comment">&lt;!--配置dataSource，这里使用c3p0连接池--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"dataSource"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.mchange.v2.c3p0.ComboPooledDataSource"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"driverClass"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"com.mysql.jdbc.Driver"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"jdbcUrl"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"jdbc:mysql:///zhongfucheng"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"user"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"root"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"root"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--在bean中配置事务的管理器类，把它作为一个bean对象--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"txManage"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span>
+    <span class="hljs-comment">&lt;!--引用数据库连接池--&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"dataSource"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"dataSource"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--使用事务管理器，配置如何管理事务--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">tx:advice</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"txAdvice"</span> <span class="hljs-attr">transaction-manager</span>=<span class="hljs-string">"txManage"</span>&gt;</span>
+    <span class="hljs-comment">&lt;!--配置事务的属性--&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">tx:attributes</span>&gt;</span>
+        <span class="hljs-comment">&lt;!--所有的方法都是只读状态--&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">tx:method</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"*"</span> <span class="hljs-attr">read-only</span>=<span class="hljs-string">"true"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">tx:attributes</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">tx:advice</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--最后在AOP中配置拦截哪些方法--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">aop:config</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"pt"</span> <span class="hljs-attr">expression</span>=<span class="hljs-string">"execution(* MySpring.*.*(..) )"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">aop:advisor</span> <span class="hljs-attr">advice-ref</span>=<span class="hljs-string">"txAdvice"</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">"pt"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">aop:advisor</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">aop:config</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--创建JdbcTemplate对象--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"jdbcTemplate"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jdbc.core.JdbcTemplate"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"dataSource"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"dataSource"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span></code></pre>
+</li>
+<li><p><strong>注解</strong></p>
+<p>使用xml的方式特别的繁琐，需要好多步骤。要先配置事务管理器类，然后再配置事务的属性，最后还要在AOP中指定拦截哪些方法。Spring提供了注解的方式，使用注解在配置上就很简单了。</p>
+<p><em>我基本都是使用注解进行开发的。</em></p>
+<p>使用注解的配置如下</p>
+<pre><code class="hljs xml"><span class="hljs-comment">&lt;!--在bean中配置事务的管理器类，把它作为一个bean对象--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"txManage"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span>
+    <span class="hljs-comment">&lt;!--引用数据库连接池--&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"dataSource"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"dataSource"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--开启注解，实现事务控制--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">tx:annotation-driven</span> <span class="hljs-attr">transaction-manager</span>=<span class="hljs-string">"txManage"</span>/&gt;</span></code></pre>
+
+<p>然后我们想要控制哪个方法的事务，在方法上面添加@Transactional这个注解就可以了。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="4-3-事务属性"><a href="#4-3-事务属性" class="headerlink" title="4.3 事务属性"></a>4.3 事务属性</h4><p>在使用xml配置的方式时，通过tx:advice标签就是在指定事务的属性。我们也可以在@Transactional注解中添加事务的属性。</p>
+<p>事务的属性有以下部分：</p>
+<pre><code class="hljs Java"><span class="hljs-comment">// 这个代表事务的传播行为</span>
+<span class="hljs-function">Propagation <span class="hljs-title">propagation</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> Propagation.REQUIRED</span>;
+
+<span class="hljs-comment">// 默认是数据库的事务隔离级别</span>
+<span class="hljs-function">Isolation <span class="hljs-title">isolation</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> Isolation.DEFAULT</span>;
+
+<span class="hljs-comment">// 这个代表超时时长</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">timeout</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> TransactionDefinition.TIMEOUT_DEFAULT</span>;
+
+<span class="hljs-comment">// 是否只读</span>
+<span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">readOnly</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">false</span></span>;
+
+<span class="hljs-comment">// 哪些异常回滚</span>
+String[] rollbackForClassName() <span class="hljs-keyword">default</span> &#123;&#125;;
+
+<span class="hljs-comment">// 哪些异常不回滚</span>
+String[] noRollbackForClassName() <span class="hljs-keyword">default</span> &#123;&#125;;</code></pre>
+
+<p>这里有一个事务传播行为比较重要，它规定了嵌套事务是如何执行的，主要有以下7种事务传播行为：</p>
+<p>首先是3种支持当前事务的情况：</p>
+<ol>
+<li>PROPAGATION_REQUIRED (required，必须)：默认就是它。如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。</li>
+<li>PROPAGATION_SUPPORTS (supports，支持)：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。</li>
+<li>PROPAGATION_MANDATORY (mandatory ，强制)：如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。</li>
+</ol>
+<p>其次是3种不支持当前事务的情况：</p>
+<ol>
+<li>PROPAGATION_REQUIRES_NEW (requires_new，必须新的)：如果当前方法有事务了，当前方法事务会挂起。始终开启一个新的事务，直到新的事务执行完，当前方法的事务才开始。</li>
+<li>PROPAGATION_NOT_SUPPORTED (not_supported，不支持)：如果当前方法有事务了，当前方法事务会挂起。以非事务方式运行，运行完后，当前方法的事务才开始。</li>
+<li>PROPAGATION_NEVER (never，从不)：以非事务方式运行，如果当前存在事务，则抛出异常</li>
+</ol>
+<p>前6种事务是两两对应的，除了这6种，还有1种特殊情况：</p>
+<ol>
+<li>PROPAGATION_NESTED (nested，嵌套)：如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于PROPAGATION_REQUIRED。</li>
+</ol>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/">常用框架</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/">常用框架</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/23/%E9%A1%B9%E7%9B%AE/B2C%E7%94%B5%E5%95%86%E7%BD%91%E7%AB%99/index/">
+                        <span class="hidden-mobile">项目系列-B2C电商网站</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "常用框架-Spring&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "§"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
