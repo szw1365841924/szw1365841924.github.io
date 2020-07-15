@@ -140,7 +140,7 @@
                   
                   <span class="post-meta mr-2">
                     <i class="iconfont icon-chart"></i>
-                    6.8k 字
+                    6.4k 字
                   </span>
                 
 
@@ -150,7 +150,7 @@
                       <i class="iconfont icon-clock-fill"></i>
                     
                     
-                    89
+                    84
                      分钟
                   </span>
                 
@@ -856,26 +856,6 @@
 </li>
 <li><p>HashMap是线程不安全的，同时在jdk1.7中链表使用的是头插法，多线程操作下很容易出现死循环。jdk1.8使用的是尾插法，解决了这个问题，但是它仍然是线程不安全的。如果想保证线程请使用ConcurrentHashmap或者和HashTable(不建议HashTable)</p>
 </li>
-</ul>
-<h3 id="4-ConcurrentHashmap简述"><a href="#4-ConcurrentHashmap简述" class="headerlink" title="4.ConcurrentHashmap简述"></a>4.ConcurrentHashmap简述</h3><p><em>说实话，对我来说HashMap就已经很难了，所以ConcurrentHashmap我看起来依然十分吃力。源码好多地方我的水平还是很难弄懂，不过这个类的大致用法，以及部分重要的知识点我还是看的比较明白的，所以这里可能不会涉及太多的源码部分的讲解，还请大家多多包涵！</em></p>
-<h4 id="ConcurrentHashmap的存储结构"><a href="#ConcurrentHashmap的存储结构" class="headerlink" title="ConcurrentHashmap的存储结构~"></a>ConcurrentHashmap的存储结构~</h4><ul>
-<li>在JDK1.7中，它是介样滴~</li>
-</ul>
-<p><em>图片来源: JavaGuide的PDF文档</em></p>
-<p><em>地址: <a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">https://github.com/Snailclimb/JavaGuide</a></em></p>
-<p><img src="/img/Java/ConcurrentHashMap%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84_jdk1.7.png" srcset="/img/loading.gif" alt="ConcurrentHashMap存储结构_jdk1.7"></p>
-<p>可以看到它的内部进一步细分了若干个小的HashMap，我们称作段<code>(Segment)</code>，默认情况下一个ConcurrentHashMap分为16段。这就表明了，如果不同线程操作的段不同是不会发生冲突的~</p>
-<p><em>我是这么理解的，把Segment想象成一把锁，一个Segment数组就是一个锁数组，每个锁只锁住table数组中的一小段连续数据，这样就实现了多把锁控制同一个数组，访问数组中某一部分不会影响其他内容，加大了并发量~如有不对，还请指出呀！</em></p>
-<p>Segment的结构和HashMap很相似，</p>
-<ul>
-<li>在JDK1.8中，它是介样滴~</li>
-</ul>
-<p><img src="/img/Java/ConcurrentHashMap%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84_jdk1.8.png" srcset="/img/loading.gif" alt="ConcurrentHashMap存储结构_jdk1.8"></p>
-<p>在JDK1.8中取消使用Segment实现的分段锁，改为使用CAS+synchronized保证线程安全~由于只锁住一个节点，并发性进一步得到了提高！</p>
-<h4 id="ConcurrentHashMap的使用总结"><a href="#ConcurrentHashMap的使用总结" class="headerlink" title="ConcurrentHashMap的使用总结"></a>ConcurrentHashMap的使用总结</h4><ul>
-<li>在JDK1.7中ConcurrentHashMap是使用Segment分段锁保证并发安全，而在JDK1.8中ConcurrentHashMap是使用CAS+synchronized保证并发安全。</li>
-<li>ConcurrentHashMap中key和value都不允许存放null值</li>
-<li>ConcurrentHashMap数据结构上也是哈希表(数组+链表)+红黑树，变为红黑树的时机也是当哈希表中的链表长度大于 8，哈希表的长度大于64时进行转换，否则先扩容</li>
 </ul>
 
             </article>
