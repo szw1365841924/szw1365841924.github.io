@@ -182,6 +182,7 @@
               <h2 id="Java-集合"><a href="#Java-集合" class="headerlink" title="Java-集合"></a>Java-集合</h2><p><em>以下的内容都是我个人学习时遇到的知识点，再加上我个人的理解。如有不对的地方还请多多包涵，下面是我的联系方式，有其他理解或者不对的地方都可以加我！共同讨论，共同进步！</em></p>
 <p>QQ: 1365841924</p>
 <p><strong><em>斜体</em></strong>是我的个人理解</p>
+<p><em>以下内容均基于JDK 1.8来解释的</em></p>
 <h3 id="1-ArrayList详解"><a href="#1-ArrayList详解" class="headerlink" title="1.ArrayList详解"></a>1.ArrayList详解</h3><h4 id="首先从ArrayList的属性入手。上图！"><a href="#首先从ArrayList的属性入手。上图！" class="headerlink" title="首先从ArrayList的属性入手。上图！"></a>首先从ArrayList的属性入手。上图！</h4><p><img src="/img/Java/ArrayList%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7_1.png" srcset="/img/loading.gif" alt="ArrayList成员属性_1"></p>
 <p><img src="/img/Java/ArrayList%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7_2.png" srcset="/img/loading.gif" alt="ArrayList成员属性_2"></p>
 <p><img src="/img/Java/ArrayList%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7_3.png" srcset="/img/loading.gif" alt="ArrayList成员属性_3"></p>
@@ -233,7 +234,7 @@
 <p>在这里我们可以看到之前提到的，如果使用默认构造方法，虽然先赋值了一个空数组，但是在这里会扩容成大小为10的数组。</p>
 <p><code>calculateCapacity()</code>说完了，就该进入到<code>ensureExplicitCapacity()</code>了。</p>
 <pre><code class="hljs Java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ensureExplicitCapacity</span><span class="hljs-params">(<span class="hljs-keyword">int</span> minCapacity)</span> </span>&#123;
-    <span class="hljs-comment">// 这个modCount不用管，我进入看了以下，认为就是记录ArrayList集合操作的次数</span>
+    <span class="hljs-comment">// 这个modCount不用管，它记录ArrayList集合操作的次数</span>
     modCount++;
 
     <span class="hljs-comment">// 这里如果minCapacity(size + 1)大于elementdata数组的长度那么就进行扩容</span>
